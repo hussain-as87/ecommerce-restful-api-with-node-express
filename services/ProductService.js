@@ -30,14 +30,26 @@ export const index = aysncHandler(async (req, res) => {
   let skip = (page - 1) * limit;
 
   //!query
-  let BuildQuery = Product.find(JSON.parse(queryStr)).skip(skip).limit(limit);
-  //sorting
+  let BuildQuery = Product.find(JSON.parse(queryStr)).skip(skip)
+  .limit(limit);
+
+  //fields
+  if (req.query.fields) {
+    const fields = req.query.fields.split(",").join(" ");
+    BuildQuery = BuildQuery.select(fields);
+  }else {
+    BuildQuery = BuildQuery.select("-__v");
+  }
+
+//sorting
   if (req.query.sort) {
     const sortBy = req.query.sort.split(",").join(" ");
     BuildQuery = BuildQuery.sort(sortBy);
   } else {
     BuildQuery = BuildQuery.sort("-createdAt");
   }
+  //feilds
+
   //!execute
   const products = await BuildQuery;
   await res.status(200).json({ result: products.length, data: products });
