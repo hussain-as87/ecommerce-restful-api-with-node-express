@@ -12,6 +12,6 @@ const brandSchema = new mongoose.Schema(
     slug: { type: String, lowercase: true },
     image: String,
   },
-  { timeseries: true }
+  { timestamps: true }
 );
 export const Brand = mongoose.model("Brand", brandSchema);

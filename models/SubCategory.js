@@ -17,6 +17,6 @@ const SubCategorySchema = new mongoose.Schema(
         required:[true,"Subcategory must be belongs to parent category"]
     }
   },
-  { timeseries: true }
+  { timestamps: true }
 );
 export const SubCategory = mongoose.model("SubCategory", SubCategorySchema);

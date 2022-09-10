@@ -13,11 +13,34 @@ import { validatorMiddleware } from "../middlewares/ValidatorMiddleware.js";
  * @access public
  */
 export const index = aysncHandler(async (req, res) => {
+  //for take copy of req.query and dont change anything in req.query {... }
+  //filter
+  const queryStringObj = { ...req.query };
+  const excludesFields = ["page", "sort", "limit", "fields"];
+  excludesFields.forEach((field) => delete queryStringObj[field]);
+
+  //apply filtertion using (gte,gt,lte,lt)
+  let queryStr = JSON.stringify(queryStringObj);
+  queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => {
+    `$${match}`;
+  });
+  //pagination
   let page = req.query.page * 1 || 1;
   let limit = req.query.limit * 1 || 5;
   let skip = (page - 1) * limit;
-  const products = await Product.find().skip(skip).limit(limit);
-  res.status(200).json({ result: products.length, data: products });
+
+  //!query
+  let BuildQuery = Product.find(JSON.parse(queryStr)).skip(skip).limit(limit);
+  //sorting
+  if (req.query.sort) {
+    const sortBy = req.query.sort.split(",").join(" ");
+    BuildQuery = BuildQuery.sort(sortBy);
+  } else {
+    BuildQuery = BuildQuery.sort("-createdAt");
+  }
+  //!execute
+  const products = await BuildQuery;
+  await res.status(200).json({ result: products.length, data: products });
 });
 /**
  * @description Show specific products by id

@@ -12,6 +12,6 @@ const categorySchema = new mongoose.Schema(
     slug: { type: String, lowercase: true },
     image:String
   },
-  { timeseries: true }
+  { timestamps: true }
 );
 export const Category = mongoose.model("Category", categorySchema);
