@@ -6,6 +6,7 @@ import aysncHandler from "express-async-handler";
 import { ApiError } from "../utils/apiError.js";
 import { check } from "express-validator";
 import { validatorMiddleware } from "../middlewares/ValidatorMiddleware.js";
+import ApiFeatures from "../utils/dummyData/apiFeatures.js";
 
 /**
  * @description Get list of products
@@ -13,45 +14,13 @@ import { validatorMiddleware } from "../middlewares/ValidatorMiddleware.js";
  * @access public
  */
 export const index = aysncHandler(async (req, res) => {
-  //for take copy of req.query and dont change anything in req.query {... }
-  //filter
-  const queryStringObj = { ...req.query };
-  const excludesFields = ["page", "sort", "limit", "fields"];
-  excludesFields.forEach((field) => delete queryStringObj[field]);
-
-  //apply filtertion using (gte,gt,lte,lt)
-  let queryStr = JSON.stringify(queryStringObj);
-  queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => {
-    `$${match}`;
-  });
-  //pagination
-  let page = req.query.page * 1 || 1;
-  let limit = req.query.limit * 1 || 5;
-  let skip = (page - 1) * limit;
-
-  //!query
-  let BuildQuery = Product.find(JSON.parse(queryStr)).skip(skip)
-  .limit(limit);
-
-  //fields
-  if (req.query.fields) {
-    const fields = req.query.fields.split(",").join(" ");
-    BuildQuery = BuildQuery.select(fields);
-  }else {
-    BuildQuery = BuildQuery.select("-__v");
-  }
-
-//sorting
-  if (req.query.sort) {
-    const sortBy = req.query.sort.split(",").join(" ");
-    BuildQuery = BuildQuery.sort(sortBy);
-  } else {
-    BuildQuery = BuildQuery.sort("-createdAt");
-  }
-  //feilds
-
-  //!execute
-  const products = await BuildQuery;
+  const api_features = new ApiFeatures(Product.find(), req.query)
+    .paginate()
+    .filters()
+    .sort()
+    .search()
+    .limitFields();
+  const products = await api_features.mongooseQuery;
   await res.status(200).json({ result: products.length, data: products });
 });
 /**
