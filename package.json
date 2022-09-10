@@ -6,12 +6,15 @@
   "type": "module",
   "scripts": {
     "start:dev": "nodemon server.js",
-    "start:prod": "SET NODE_ENV=production & nodemon server.js"
+    "start:prod": "SET NODE_ENV=production & nodemon server.js",
+    "seed": "cd .\\utils\\dummyData\\ & node seeder.js -i",
+    "seed:rollback": "cd .\\utils\\dummyData\\ & node seeder.js -d"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "colors": "^1.4.0",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-async-handler": "^1.2.0",

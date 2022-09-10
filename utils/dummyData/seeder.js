@@ -2,7 +2,6 @@ import fs from "fs";
 import "colors";
 import dotenv from "dotenv";
 import { Product } from "../../models/Product.js";
-// eslint-disable-next-line camelcase
 import { db_connection } from "../../config/database.js";
 
 dotenv.config({ path: "../../config.env" });
@@ -17,7 +16,6 @@ const products = JSON.parse(fs.readFileSync("./products.json"));
 const insertData = async () => {
   try {
     await Product.create(products);
-
     console.log("Data Inserted".green.inverse);
     process.exit();
   } catch (error) {

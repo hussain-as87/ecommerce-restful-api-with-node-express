@@ -61,6 +61,6 @@ const productSchema = new mongoose.Schema(
       default: 0,
     },
   },
-  { timeseries: true }
+  { timestamps: true }
 );
 export const Product = mongoose.model("Product", productSchema);
