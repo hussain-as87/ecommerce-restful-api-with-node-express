@@ -6,7 +6,7 @@ import aysncHandler from "express-async-handler";
 import { ApiError } from "../utils/apiError.js";
 import { check } from "express-validator";
 import { validatorMiddleware } from "../middlewares/ValidatorMiddleware.js";
-import ApiFeatures from "../utils/dummyData/apiFeatures.js";
+import ApiFeatures from "../utils/apiFeatures.js";
 
 /**
  * @description Get list of products
@@ -19,7 +19,7 @@ export const index = aysncHandler(async (req, res) => {
     .paginate(countDocument)
     .filters()
     .sort()
-    .search()
+    .search("Product")
     .limitFields();
   const { mongooseQuery, paginationResult } = api_features;
   const products = await mongooseQuery;
