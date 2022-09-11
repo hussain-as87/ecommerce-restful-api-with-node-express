@@ -14,14 +14,18 @@ import ApiFeatures from "../utils/dummyData/apiFeatures.js";
  * @access public
  */
 export const index = aysncHandler(async (req, res) => {
+  const countDocument = await Product.countDocuments();
   const api_features = new ApiFeatures(Product.find(), req.query)
-    .paginate()
+    .paginate(countDocument)
     .filters()
     .sort()
     .search()
     .limitFields();
-  const products = await api_features.mongooseQuery;
-  await res.status(200).json({ result: products.length, data: products });
+  const { mongooseQuery, paginationResult } = api_features;
+  const products = await mongooseQuery;
+  res
+    .status(200)
+    .json({ result: products.length, paginationResult, data: products });
 });
 /**
  * @description Show specific products by id

@@ -4,16 +4,16 @@ class ApiFeatures {
     this.queryString = queryString;
   }
   filters() {
-      //for take copy of req.query and dont change anything in req.query {... }
-      const queryStringObj = { ...this.queryString };
-      const excludesFields = ["page", "sort", "limit", "fields"];
-      //apply filtertion using (gte,gt,lte,lt)
-      excludesFields.forEach((field) => delete queryStringObj[field]);
-      // Apply filtration using [gte, gt, lte, lt]
-      let queryStr = JSON.stringify(queryStringObj);
-      queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-      this.mongooseQuery = this.mongooseQuery.find(JSON.parse(queryStr));
-      return this;
+    //for take copy of req.query and dont change anything in req.query {... }
+    const queryStringObj = { ...this.queryString };
+    const excludesFields = ["page", "sort", "limit", "fields"];
+    //apply filtertion using (gte,gt,lte,lt)
+    excludesFields.forEach((field) => delete queryStringObj[field]);
+    // Apply filtration using [gte, gt, lte, lt]
+    let queryStr = JSON.stringify(queryStringObj);
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+    this.mongooseQuery = this.mongooseQuery.find(JSON.parse(queryStr));
+    return this;
   }
   sort() {
     //sorting
@@ -47,12 +47,31 @@ class ApiFeatures {
     }
     return this;
   }
-  paginate() {
+  paginate(countDocument) {
     //pagination
     let page = this.queryString.page * 1 || 1;
-    let limit = this.queryString.limit * 1 || 5;
+    let limit = this.queryString.limit * 1 || 10;
     let skip = (page - 1) * limit;
+    let endIndex = page * limit;
+
+    //pagination result
+    const pagination = {};
+    pagination.currentPage = page;
+    pagination.limit = limit;
+    pagination.numberOfPages = Math.ceil(countDocument / limit);
+
+    //next page
+    if (endIndex < countDocument) {
+      pagination.next = page + 1;
+    }
+
+    //previous page
+    if (skip > 0) {
+      pagination.previous = page - 1;
+    }
+
     this.mongooseQuery = this.mongooseQuery.skip(skip).limit(limit);
+    this.paginationResult = pagination;
     return this;
   }
 }
