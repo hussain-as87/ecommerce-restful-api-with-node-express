@@ -4,6 +4,7 @@ import aysncHandler from "express-async-handler";
 import { ApiError } from "../utils/apiError.js";
 import { check } from "express-validator";
 import { validatorMiddleware } from "../middlewares/ValidatorMiddleware.js";
+import ApiFeatures from "../utils/dummyData/apiFeatures.js";
 
 /**
  * @description middleware for Set category id from params
@@ -34,14 +35,23 @@ export const createFilterObj = (req, res, next) => {
  * @access public
  */
 export const index = aysncHandler(async (req, res) => {
-  let page = req.query.page * 1 || 1;
-  let limit = req.query.limit * 1 || 5;
-  let skip = (page - 1) * limit;
-  const subcategories = await SubCategory.find(req.filterObject)
-    .skip(skip)
-    .limit(limit)
-    .populate({ path: "category", select: "name =_id" });
-  res.status(200).json({ result: subcategories.length, data: subcategories });
+  const countDocument = await SubCategory.countDocuments();
+  const api_features = new ApiFeatures(
+    SubCategory.find().populate({ path: "category", select: "name =_id" }),
+    req.query
+  )
+    .paginate(countDocument)
+    .filters()
+    .sort()
+    .search()
+    .limitFields();
+  const { mongooseQuery, paginationResult } = api_features;
+  const subcategories = await mongooseQuery;
+  res.status(200).json({
+    result: subcategories.length,
+    paginationResult,
+    data: subcategories,
+  });
 });
 
 /**

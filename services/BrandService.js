@@ -4,6 +4,7 @@ import aysncHandler from "express-async-handler";
 import { ApiError } from "../utils/apiError.js";
 import { check } from "express-validator";
 import { validatorMiddleware } from "../middlewares/ValidatorMiddleware.js";
+import ApiFeatures from "../utils/dummyData/apiFeatures.js";
 
 /**
  * @description Get list of brands
@@ -11,11 +12,18 @@ import { validatorMiddleware } from "../middlewares/ValidatorMiddleware.js";
  * @access public
  */
 export const index = aysncHandler(async (req, res) => {
-  let page = req.query.page * 1 || 1;
-  let limit = req.query.limit * 1 || 5;
-  let skip = (page - 1) * limit;
-  const brands = await Brand.find().skip(skip).limit(limit);
-  res.status(200).json({ result: brands.length, data: brands });
+  const countDocument = await Brand.countDocuments();
+  const api_features = new ApiFeatures(Brand.find(), req.query)
+    .paginate(countDocument)
+    .filters()
+    .sort()
+    .search()
+    .limitFields();
+  const { mongooseQuery, paginationResult } = api_features;
+  const brands = await mongooseQuery;
+  res
+    .status(200)
+    .json({ result: brands.length, paginationResult, data: brands });
 });
 /**
  * @description Show specific brands by id
@@ -50,13 +58,13 @@ export const create = aysncHandler(async (req, res) => {
 export const update = aysncHandler(async (req, res, next) => {
   const { id } = req.params;
   const { name } = req.body;
-  const brand  = await Brand.findByIdAndUpdate(
+  const brand = await Brand.findByIdAndUpdate(
     id,
     { name: name, slug: slugify(name) },
     { new: true }
   );
-  if (!brand ) next(new ApiError(`No Brand with id ${id}`, 404));
-  res.status(200).json({ data: brand  });
+  if (!brand) next(new ApiError(`No Brand with id ${id}`, 404));
+  res.status(200).json({ data: brand });
 });
 /**
  * @description Delete specific brand by id
@@ -65,7 +73,7 @@ export const update = aysncHandler(async (req, res, next) => {
  */
 export const destroy = aysncHandler(async (req, res, next) => {
   const { id } = req.params;
-  const brand = await Brand.findByIdAndDelete({_id:id});
+  const brand = await Brand.findByIdAndDelete({ _id: id });
   if (!brand) next(new ApiError(`No Brand with id ${id}`, 404));
   res.status(204).json({ message: `Deleted Successfully brand by ${id}` });
 });
