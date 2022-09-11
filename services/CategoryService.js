@@ -2,9 +2,8 @@ import { Category } from "../models/Category.js";
 import slugify from "slugify";
 import aysncHandler from "express-async-handler";
 import { ApiError } from "../utils/apiError.js";
-import { check } from "express-validator";
-import { validatorMiddleware } from "../middlewares/ValidatorMiddleware.js";
 import ApiFeatures from "../utils/apiFeatures.js";
+import { deleteFactory, updateFactory } from "./handlersFactory.js";
 
 /**
  * @description Get list of categories
@@ -56,48 +55,11 @@ export const create = aysncHandler(async (req, res) => {
  * @route PUT api/vi/categories/:id
  * @access private
  */
-export const update = aysncHandler(async (req, res, next) => {
-  const { id } = req.params;
-  const { name } = req.body;
-  const category = await Category.findByIdAndUpdate(
-    id,
-    { name: name, slug: slugify(name) },
-    { new: true }
-  );
-  if (!category) next(new ApiError(`No Category with id ${id}`, 404));
-  res.status(200).json({ data: category });
-});
+export const update = updateFactory(Category)
 /**
  * @description Delete specific category by id
  * @route PUT api/vi/categories/:id
  * @access private
  */
-export const destroy = aysncHandler(async (req, res, next) => {
-  const { id } = req.params;
-  const category = await Category.findByIdAndDelete({ _id: id });
-  if (!category) next(new ApiError(`No Category with id ${id}`, 404));
-  res.status(204).json({ message: `Deleted Successfully category by ${id}` });
-});
+export const destroy = deleteFactory(Category);
 
-export const ValidationbodyRulesForCreate = [
-  check("name")
-    .notEmpty()
-    .withMessage("category name is required !")
-    .isString()
-    .withMessage("Category name must be string !")
-    .isLength({ min: 3 })
-    .withMessage("Category name is too short !")
-    .isLength({ max: 32 })
-    .withMessage("Category name is too long !"),
-  validatorMiddleware,
-];
-export const ValidationbodyRulesForUpdate = [
-  check("name")
-    .isString()
-    .withMessage("Category name must be string !")
-    .isLength({ min: 3 })
-    .withMessage("Category name is too short !")
-    .isLength({ max: 32 })
-    .withMessage("Category name is too long !"),
-  validatorMiddleware,
-];

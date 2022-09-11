@@ -7,10 +7,10 @@ import {
   index,
   setCategoryId,
   show,
-  update,
-  ValidationbodyRulesForCreate,
-  ValidationbodyRulesForUpdate,
+  update
 } from "../services/SubCategoryService.js";
+import {ValidationbodyRulesForCreate,ValidationbodyRulesForUpdate}from "../utils/validations/subCategoryValidation.js"
+
 // to allow us to access parameters on other routes
 const router = express.Router({ mergeParams: true });
 
