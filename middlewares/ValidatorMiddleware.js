@@ -12,6 +12,6 @@ export const validatorMiddleware = (req, res, next) => {
 *params id
 */
 export const validationparmsRules = [
-    check("id").isMongoId().notEmpty().withMessage("Invalid category id format !"),
+    check("id").isMongoId().notEmpty().withMessage("Invalid id in format !"),
     validatorMiddleware,
   ];

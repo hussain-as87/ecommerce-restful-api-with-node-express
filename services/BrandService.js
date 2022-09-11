@@ -2,9 +2,8 @@ import { Brand } from "../models/Brand.js";
 import slugify from "slugify";
 import aysncHandler from "express-async-handler";
 import { ApiError } from "../utils/apiError.js";
-import { check } from "express-validator";
-import { validatorMiddleware } from "../middlewares/ValidatorMiddleware.js";
 import ApiFeatures from "../utils/apiFeatures.js";
+import { deleteFactory, updateFactory } from "./handlersFactory.js";
 
 /**
  * @description Get list of brands
@@ -55,48 +54,11 @@ export const create = aysncHandler(async (req, res) => {
  * @route PUT api/vi/brands/:id
  * @access private
  */
-export const update = aysncHandler(async (req, res, next) => {
-  const { id } = req.params;
-  const { name } = req.body;
-  const brand = await Brand.findByIdAndUpdate(
-    id,
-    { name: name, slug: slugify(name) },
-    { new: true }
-  );
-  if (!brand) next(new ApiError(`No Brand with id ${id}`, 404));
-  res.status(200).json({ data: brand });
-});
+export const update = updateFactory(Brand);
 /**
  * @description Delete specific brand by id
  * @route PUT api/vi/brands/:id
  * @access private
  */
-export const destroy = aysncHandler(async (req, res, next) => {
-  const { id } = req.params;
-  const brand = await Brand.findByIdAndDelete({ _id: id });
-  if (!brand) next(new ApiError(`No Brand with id ${id}`, 404));
-  res.status(204).json({ message: `Deleted Successfully brand by ${id}` });
-});
+export const destroy = deleteFactory(Brand);
 
-export const ValidationbodyRulesForCreate = [
-  check("name")
-    .notEmpty()
-    .withMessage("brand name is required !")
-    .isString()
-    .withMessage("brand name must be string !")
-    .isLength({ min: 3 })
-    .withMessage("brand name is too short !")
-    .isLength({ max: 32 })
-    .withMessage("brand name is too long !"),
-  validatorMiddleware,
-];
-export const ValidationbodyRulesForUpdate = [
-  check("name")
-    .isString()
-    .withMessage("brand name must be string !")
-    .isLength({ min: 3 })
-    .withMessage("brand name is too short !")
-    .isLength({ max: 32 })
-    .withMessage("brand name is too long !"),
-  validatorMiddleware,
-];

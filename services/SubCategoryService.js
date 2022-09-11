@@ -2,9 +2,8 @@ import { SubCategory } from "../models/SubCategory.js";
 import slugify from "slugify";
 import aysncHandler from "express-async-handler";
 import { ApiError } from "../utils/apiError.js";
-import { check } from "express-validator";
-import { validatorMiddleware } from "../middlewares/ValidatorMiddleware.js";
 import ApiFeatures from "../utils/apiFeatures.js";
+import { deleteFactory, updateFactory } from "./handlersFactory.js";
 
 /**
  * @description middleware for Set category id from params
@@ -91,60 +90,12 @@ export const create = aysncHandler(async (req, res) => {
  * @route PUT api/vi/subcategories/:id
  * @access private
  */
-export const update = aysncHandler(async (req, res, next) => {
-  const { id } = req.params;
-  const { name, category } = req.body;
-  const subcategory = await SubCategory.findByIdAndUpdate(
-    id,
-    { name: name, slug: slugify(name), category: category },
-    { new: true }
-  );
-  if (!subcategory) next(new ApiError(`No SubCategory with id ${id}`, 404));
-  res.status(200).json({ data: subcategory });
-});
+export const update = updateFactory(SubCategory);
 /**
  * @description Delete specific subcategories by id
  * @route PUT api/vi/subcategories/:id
  * @access private
  */
-export const destroy = aysncHandler(async (req, res, next) => {
-  const { id } = req.params;
-  const subcategory = await SubCategory.findByIdAndDelete(id);
-  if (!subcategory) next(new ApiError(`No SubCategory with id ${id}`, 404));
-  res
-    .status(204)
-    .send({ message: `Deleted Successfully SubCategory by ${id}` });
-});
+export const destroy = deleteFactory(SubCategory);
 
-export const ValidationbodyRulesForCreate = [
-  check("name")
-    .notEmpty()
-    .withMessage("SubCategory name is required !")
-    .isString()
-    .withMessage("SubCategory name must be string !")
-    .isLength({ min: 3 })
-    .withMessage("SubCategory name is too short !")
-    .isLength({ max: 32 })
-    .withMessage("SubCategory name is too long !"),
-  check("category")
-    .notEmpty()
-    .withMessage("category parent is required !")
-    .isMongoId()
-    .withMessage("category id is Uncorrect !"),
-  validatorMiddleware,
-];
-export const ValidationbodyRulesForUpdate = [
-  check("name")
-    .isString()
-    .withMessage("SubCategory name must be string !")
-    .isLength({ min: 3 })
-    .withMessage("SubCategory name is too short !")
-    .isLength({ max: 32 })
-    .withMessage("SubCategory name is too long !"),
-  check("category")
-    .notEmpty()
-    .withMessage("category parent is required !")
-    .isMongoId()
-    .withMessage("category id is Uncorrect !"),
-  validatorMiddleware,
-];
+

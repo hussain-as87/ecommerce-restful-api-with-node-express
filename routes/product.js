@@ -1,15 +1,14 @@
 import express from "express";
-// eslint-disable-next-line import/extensions
 import { validationparmsRules } from "../middlewares/ValidatorMiddleware.js";
 import {
   create,
   destroy,
   index,
   show,
-  update,
-  ValidationbodyRulesForCreate,
-  ValidationbodyRulesForUpdate,
+  update
 } from "../services/ProductService.js";
+import {ValidationbodyRulesForCreate,ValidationbodyRulesForUpdate}from "../utils/validations/productValidation.js"
+
 const router = express.Router();
 
 
