@@ -4,7 +4,7 @@ import aysncHandler from "express-async-handler";
 import { ApiError } from "../utils/apiError.js";
 import { check } from "express-validator";
 import { validatorMiddleware } from "../middlewares/ValidatorMiddleware.js";
-import ApiFeatures from "../utils/dummyData/apiFeatures.js";
+import ApiFeatures from "../utils/apiFeatures.js";
 
 /**
  * @description middleware for Set category id from params
