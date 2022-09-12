@@ -20,7 +20,7 @@ export const ValidationbodyRulesForCreate = [
     .withMessage("category parent is required !")
     .isMongoId()
     .withMessage("category id is Uncorrect !"),
-  validatorMiddleware
+  validatorMiddleware,
 ];
 export const ValidationbodyRulesForUpdate = [
   check("name")
@@ -35,5 +35,9 @@ export const ValidationbodyRulesForUpdate = [
       req.body.slug = slugify(val);
       return true;
     }),
-  validatorMiddleware
+  check("category")
+    .optional()
+    .isMongoId()
+    .withMessage("category id is Uncorrect !"),
+  validatorMiddleware,
 ];

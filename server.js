@@ -28,7 +28,7 @@ app.use(globalError);
 
 const server = app.listen(port, () => {
   console.clear();
-  console.log(`server start at http://localhost:${port}`.yellow.bgMagenta);
+  console.log(`server start at http://localhost:${port}`.black.bgCyan);
 });
 
 // event => listen =>callpack(error) with Node
