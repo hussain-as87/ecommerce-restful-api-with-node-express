@@ -2,6 +2,8 @@ import { check } from "express-validator";
 import { validatorMiddleware } from "../../middlewares/ValidatorMiddleware.js";
 import {Category} from "../../models/Category.js"
 import {SubCategory} from "../../models/SubCategory.js"
+import slugify from "slugify";
+
 export const ValidationbodyRulesForCreate = [
   check("title")
     .isLength({ min: 3 })

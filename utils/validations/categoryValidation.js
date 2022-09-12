@@ -1,5 +1,6 @@
 import { check } from "express-validator";
 import { validatorMiddleware } from "../../middlewares/ValidatorMiddleware.js";
+import slugify from "slugify";
 
 export const ValidationbodyRulesForCreate = [
   check("name")
