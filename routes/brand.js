@@ -4,16 +4,31 @@ import {
   create,
   destroy,
   index,
+  resizeImage,
   show,
-  update, 
+  update,
+  uploadImage,
 } from "../services/BrandService.js";
-import {ValidationbodyRulesForCreate,ValidationbodyRulesForUpdate}from "../utils/validations/BrandValidation.js"
+import {
+  ValidationbodyRulesForCreate,
+  ValidationbodyRulesForUpdate,
+} from "../utils/validations/BrandValidation.js";
 const router = express.Router();
 
 router.get("/", index);
 router.get("/:id", validationparmsRules, show);
-router.post("/", ValidationbodyRulesForCreate, create);
-router.put("/:id", validationparmsRules, ValidationbodyRulesForUpdate, update);
+router.post(
+  "/",
+  [uploadImage, resizeImage],
+  ValidationbodyRulesForCreate,
+  create
+);
+router.put(
+  "/:id",
+  [validationparmsRules, uploadImage, resizeImage],
+  ValidationbodyRulesForUpdate,
+  update
+);
 router.delete("/:id", validationparmsRules, destroy);
 
 export default router;

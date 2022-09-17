@@ -10,8 +10,22 @@ const categorySchema = new mongoose.Schema(
       maxlength: [33, "too long category name !"],
     },
     slug: { type: String, lowercase: true },
-    image:String
+    image: String,
   },
   { timestamps: true }
 );
+const setImageUrl = (doc) => {
+  // return base url + image name
+  if (doc.image) {
+    doc.image = `${process.env.BASE_URL}/uploads/categories/${doc.image}`;
+  }
+};
+//when get all,get one,update
+categorySchema.post("init", (doc) => {
+  setImageUrl(doc);
+});
+//when create
+categorySchema.post("save", (doc) => {
+  setImageUrl(doc);
+});
 export const Category = mongoose.model("Category", categorySchema);
