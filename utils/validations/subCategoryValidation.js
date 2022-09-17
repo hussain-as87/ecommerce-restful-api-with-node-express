@@ -27,11 +27,6 @@ export const ValidationbodyRulesForUpdate = [
   check("name")
     .optional()
     .isString()
-    .withMessage("SubCategory name must be string !")
-    .isLength({ min: 3 })
-    .withMessage("SubCategory name is too short !")
-    .isLength({ max: 32 })
-    .withMessage("SubCategory name is too long !")
     .custom((val, { req }) => {
       req.body.slug = slugify(val);
       return true;
