@@ -21,13 +21,15 @@ export const uploadImage = uploadSingleImage("image");
  */
 export const resizeImage = asyncHandler(async (req, res, next) => {
   const filename = `category-${uuidv4()}-${Date.now()}.jpeg`;
-  await sharp(req.file.buffer)
-    .resize(600, 600)
-    .toFormat("jpeg")
-    .jpeg({ quality: 90 })
-    .toFile(`public/uploads/categories/${filename}`);
-  //save image in Database
-  req.body.image = filename;
+  if (req.file) {
+    await sharp(req.file.buffer)
+      .resize(600, 600)
+      .toFormat("jpeg")
+      .jpeg({ quality: 90 })
+      .toFile(`public/uploads/categories/${filename}`);
+    //save image in Database
+    req.body.image = filename;
+  }
   next();
 });
 
