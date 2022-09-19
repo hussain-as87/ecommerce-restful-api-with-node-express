@@ -14,20 +14,22 @@ import { v4 as uuidv4 } from "uuid";
 /**
  * @description upload image
  */
- export const uploadImage = uploadSingleImage('image');
+export const uploadImage = uploadSingleImage("image");
 
 /**
  * @description upload image
  */
- export const resizeImage = AsyncHandler(async (req, res, next) => {
+export const resizeImage = AsyncHandler(async (req, res, next) => {
   const filename = `brand-${uuidv4()}-${Date.now()}.jpeg`;
-  await sharp(req.file.buffer)
-    .resize(600, 600)
-    .toFormat("jpeg")
-    .jpeg({ quality: 90 })
-    .toFile(`public/uploads/brands/${filename}`);
+  if (req.file) {
+    await sharp(req.file.buffer)
+      .resize(600, 600)
+      .toFormat("jpeg")
+      .jpeg({ quality: 90 })
+      .toFile(`public/uploads/brands/${filename}`);
     //save image in Database
-  req.body.image = filename; 
+    req.body.image = filename;
+  }
   next();
 });
 /**
