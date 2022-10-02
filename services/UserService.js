@@ -34,28 +34,28 @@ export const resizeImage = asyncHandler(async (req, res, next) => {
   next();
 });
 /**
- * @description Get list of brands
- * @route GET api/vi/brands
- * @access public
+ * @description Get list of users
+ * @route GET api/vi/users
+ * @access private
  */
 export const index = indexFactory(User);
 /**
- * @description Show specific brands by id
- * @route GET api/vi/brands/:id
- * @access public
+ * @description Show specific users by id
+ * @route GET api/vi/users/:id
+ * @access private
  */
 export const show = showFactory(User);
 
 /**
  * @description Create new user
- * @route POST api/vi/brands
+ * @route POST api/vi/users
  * @access private
  */
 export const create = createFactory(User);
 
 /**
  * @description Update specific user by id
- * @route PUT api/vi/brands/:id
+ * @route PUT api/vi/users/:id
  * @access private
  */
 export const update = asyncHandler(async (req, res, next) => {
@@ -79,7 +79,7 @@ export const update = asyncHandler(async (req, res, next) => {
 
 /**
  * @description Update password specific user by id
- * @route PUT api/vi/brands/:id
+ * @route PUT api/vi/users/:id
  * @access private
  */
 export const changePassword = asyncHandler(async (req, res, next) => {
@@ -101,7 +101,7 @@ export const changePassword = asyncHandler(async (req, res, next) => {
 });
 /**
  * @description Delete specific user by id
- * @route PUT api/vi/brands/:id
+ * @route PUT api/vi/users/:id
  * @access private
  */
 export const destroy = destroyFactory(User);
