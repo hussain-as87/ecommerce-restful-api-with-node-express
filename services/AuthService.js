@@ -1,5 +1,5 @@
-import crypto from "crypto";
-import jwt from "jsonwebtoken";
+/* import crypto from "crypto";
+ */ import jwt from "jsonwebtoken";
 import asyncHandler from "express-async-handler";
 import { User } from "../models/User.js";
 import { ApiError } from "../utils/apiError.js";
@@ -135,13 +135,13 @@ export const forgotPassword = asyncHandler(async (req, res, next) => {
   }
   //2)if user exist, generate reset random 6 digits and save in db
   const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
-  const hashedRestCode = crypto
+  /*   const hashedRestCode = crypto
     .createHash("sha256")
     .update(resetCode)
-    .digest("hax");
+    .digest("hax"); */
 
   // Save hashed password reset code into db
-  user.passwordResetCode = hashedRestCode;
+  user.passwordResetCode = /* hashedRestCode */ resetCode;
   // Add expiration time for password reset code (10 min)
   user.passwordResetExpires = Date.now() + 10 * 60 * 1000;
   user.passwordResetVerified = false;
@@ -153,7 +153,7 @@ export const forgotPassword = asyncHandler(async (req, res, next) => {
   try {
     await sendEmail({
       email: user.email,
-      subject: 'Your password reset code (valid for 10 min)',
+      subject: "Your password reset code (valid for 10 min)",
       message,
     });
   } catch (err) {
@@ -162,11 +162,68 @@ export const forgotPassword = asyncHandler(async (req, res, next) => {
     user.passwordResetVerified = undefined;
 
     await user.save();
-    return next(new ApiError('There is an error in sending email', 500));
+    return next(new ApiError("There is an error in sending email", 500));
   }
 
   res
     .status(200)
-    .json({ status: 'Success', message: 'Reset code sent to email' });
-  
+    .json({ status: "Success", message: "Reset code sent to email" });
+});
+
+/**
+ * @description  verify password reset code
+ * @route   POST /api/v1/auth/verifyPasswordResetCode
+ * @access  Public
+ */
+export const verifyPasswordResetCode = asyncHandler(async (req, res, next) => {
+  // 1) Get user based on reset code
+  /* const hashedResetCode = crypto
+    .createHash("sha256")
+    .update(req.body.resetCode)
+    .digest("hex"); */
+
+  const user = await User.findOne({
+    passwordResetCode: /* hashedResetCode */ req.body.resetCode,
+    passwordResetExpires: { $gt: Date.now() },
+  });
+  if (!user) {
+    return next(new ApiError("Reset code invalid or expired"));
+  }
+
+  // 2) Reset code valid
+  user.passwordResetVerified = true;
+  await user.save();
+
+  res.status(200).json({
+    status: "Success",
+  });
+});
+
+/**
+ * @description  reset password
+ * @route   POST /api/v1/auth/resetPasword
+ * @access  Public
+ */
+export const resetPassword = asyncHandler(async (req, res, next) => {
+    // 1) Get user based on email
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      return next(
+        new ApiError(`There is no user with email ${req.body.email}`, 404)
+      );
+    }
+    // 2) Check if reset code verified
+    if (!user.passwordResetVerified) {
+      return next(new ApiError('Reset code not verified', 400));
+    }
+  user.password = req.body.newPassword;
+  user.passwordResetCode = undefined;
+  user.passwordResetExpires = undefined;
+  user.passwordResetVerified = undefined;
+  await user.save();
+  //3)if everything is ok, generate token
+  const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, {
+    expiresIn: process.env.JWT_EXPIRE_TIME,
+  });
+  res.status(200).json({ token });
 });
