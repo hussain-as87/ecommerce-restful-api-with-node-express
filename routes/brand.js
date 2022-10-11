@@ -16,7 +16,7 @@ import {
 const router = express.Router();
 import {permissions} from "../services/AuthService.js"
 router.get("/", index);
-router.get("/:id", validationparmsRules, show);
+router.get("/:id", validationparmsRules("id"), show);
 router.post(
   "/",permissions('admin','maneger'),
   [uploadImage, resizeImage],
@@ -25,10 +25,10 @@ router.post(
 );
 router.put(
   "/:id",permissions('admin','maneger'),
-  [validationparmsRules, uploadImage, resizeImage],
+  [validationparmsRules("id"), uploadImage, resizeImage],
   ValidationbodyRulesForUpdate,
   update
 );
-router.delete("/:id", permissions('admin'),validationparmsRules, destroy);
+router.delete("/:id", permissions('admin'),validationparmsRules("id"), destroy);
 
 export default router;

@@ -10,21 +10,23 @@ import {
   uploadProductImages
 } from "../services/ProductService.js";
 import {ValidationbodyRulesForCreate,ValidationbodyRulesForUpdate}from "../utils/validations/productValidation.js"
-import {permissions} from "../services/AuthService.js"
+import {permissions} from "../services/AuthService.js";
+import reviewsRoute from "./review.js"
 const router = express.Router();
 
 
 //nested route
+router.use("/:productId/reviews", reviewsRoute);
 router.get("/", index);
-router.get("/:id", validationparmsRules, show);
+router.get("/:id", validationparmsRules("id"), show);
 router.post("/", permissions('admin','maneger'),[uploadProductImages,resizeProductImages],ValidationbodyRulesForCreate, create);
 router.put(
   "/:id",permissions('admin','maneger'),
   [uploadProductImages,resizeProductImages],
-  validationparmsRules,
+  validationparmsRules("id"),
   ValidationbodyRulesForUpdate,
   update
 );
-router.delete("/:id", permissions('admin'),validationparmsRules, destroy);
+router.delete("/:id", permissions('admin'),validationparmsRules("id"), destroy);
 
 export default router;

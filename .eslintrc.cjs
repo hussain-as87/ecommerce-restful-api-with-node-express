@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 module.exports = {
     "env": {
         "browser": true,
@@ -22,7 +23,7 @@ module.exports = {
       "no-return-await": "off",
       "no-underscore-dangle": "off",
       "class-methods-use-this": "off",
-      "no-undef": "off",
+      "no-undef": "error",
       "node/no-unsupported-features/es-syntax": "off",
       "prefer-destructuring": ["warn", { "object": true, "array": false }],
       "no-unused-vars": ["warn", { "argsIgnorePattern": "req|res|next|val" }]

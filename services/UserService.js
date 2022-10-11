@@ -105,3 +105,78 @@ export const changePassword = asyncHandler(async (req, res, next) => {
  * @access private
  */
 export const destroy = destroyFactory(User);
+
+/**
+ * @description Get Logged user data
+ * @route  GET /api/v1/users/get
+ * @access  Private/Protect
+ */
+export const getLoggedUserData = asyncHandler(async (req, res, next) => {
+  req.params.id = req.user._id;
+  next();
+});
+
+/**
+ * @description   Update logged user password
+ * @route  GET /api/v1/users/updateMyPassword
+ * @access  Private/Protect
+ */
+export const updateLoggedUserPassword = asyncHandler(async (req, res, next) => {
+  // 1) Update user password based user payload (req.user._id)
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    {
+      password: await bcrypt.hash(req.body.password, 12),
+      passwordChangedAt: Date.now(),
+    },
+    {
+      new: true,
+    }
+  );
+
+  // 2) Generate token
+  const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, {
+    expiresIn: process.env.JWT_EXPIRE_TIME,
+  });
+
+  res.status(200).json({ data: user, token });
+});
+
+/**
+ * @description Update logged user data (without password, role)
+ * @route  GET /api/v1/users/update
+ * @access  Private/Protect
+ */
+export const updateLoggedUserData = asyncHandler(async (req, res, next) => {
+  const updatedUser = await User.findByIdAndUpdate(
+    req.user._id,
+    {
+      name: req.body.name,
+      email: req.body.email,
+      phone: req.body.phone,
+    },
+    { new: true }
+  );
+
+  res.status(200).json({ data: updatedUser });
+});
+
+/**
+ * @description Deactivate logged user
+ * @route  DELETE /api/v1/users/delete
+ * @access  Private/Protect
+ */
+export const deleteLoggedUserData = asyncHandler(async (req, res, next) => {
+  await User.findByIdAndUpdate(req.user._id, { active: false });
+
+  res.status(204).json({ status: "Success" });
+});
+/**
+ * @description active my account
+ * @route  DELETE /api/v1/users/active
+ * @access  Private/Protect
+ */
+export const activeLoggedUserData = asyncHandler(async (req, res, next) => {
+  await User.findByIdAndUpdate(req.user._id, { active: true });
+  res.status(204).json({ status: "Success" });
+});

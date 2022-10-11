@@ -11,7 +11,7 @@ export const validatorMiddleware = (req, res, next) => {
 /*
 *params id
 */
-export const validationparmsRules = [
-    check("id").isMongoId().notEmpty().withMessage("Invalid id in format !"),
+export const validationparmsRules = (param)=>[
+    check(param).isMongoId().notEmpty().withMessage("Invalid id in format !"),
     validatorMiddleware,
   ];
