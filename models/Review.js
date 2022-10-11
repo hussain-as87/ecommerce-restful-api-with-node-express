@@ -46,7 +46,7 @@ const reviewSchema = new mongoose.Schema(
         $group: {
           _id: 'product',
           avgRatings: { $avg: '$ratings' },
-          ratingsQuantity: { $sum: 1 },
+          ratingsQuantity: { $sum: 0 },
         },
       },
     ]);

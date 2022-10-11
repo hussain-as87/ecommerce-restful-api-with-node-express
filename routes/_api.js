@@ -8,6 +8,8 @@ import AuthRouter from "./auth.js";
 import ReviewRouter from "./review.js";
 import WishListRouter from "./wishList.js";
 import AddressRouter from "./address.js";
+import CouponRouter from "./coupon.js";
+import CartRouter from "./cart.js";
 import { protect } from "../services/AuthService.js";
 export const router = express.Router();
 
@@ -19,5 +21,7 @@ router.use("/products", protect, ProductRouter);
 router.use("/reviews", ReviewRouter);
 router.use("/wishlist", protect, WishListRouter);
 router.use("/address", protect, AddressRouter);
+router.use("/coupons", protect, CouponRouter);
+router.use("/cart", protect, CartRouter);
 
 router.use("/auth", AuthRouter);
