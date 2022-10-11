@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import "colors";
 import { db_connection } from "./config/database.js";
-import { router } from "./routes/api.js";
+import { router } from "./routes/_api.js";
 import { ApiError } from "./utils/apiError.js";
 import { globalError } from "./middlewares/errorMiddleware.js";
 dotenv.config({ path: "config.env" });

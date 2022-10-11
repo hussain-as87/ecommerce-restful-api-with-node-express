@@ -7,15 +7,17 @@ import UserRouter from "./user.js";
 import AuthRouter from "./auth.js";
 import ReviewRouter from "./review.js";
 import WishListRouter from "./wishList.js";
+import AddressRouter from "./address.js";
 import { protect } from "../services/AuthService.js";
 export const router = express.Router();
 
-router.use("/categories", protect,categoryRouter);
-router.use("/subcategories", protect,subCategoryRouter);
-router.use("/brands", protect,BrandRouter);
-router.use("/users", protect,UserRouter);
-router.use("/products", protect,ProductRouter);
-router.use("/reviews",ReviewRouter);
-router.use("/wishlist",protect,WishListRouter);
+router.use("/categories", protect, categoryRouter);
+router.use("/subcategories", protect, subCategoryRouter);
+router.use("/brands", protect, BrandRouter);
+router.use("/users", protect, UserRouter);
+router.use("/products", protect, ProductRouter);
+router.use("/reviews", ReviewRouter);
+router.use("/wishlist", protect, WishListRouter);
+router.use("/address", protect, AddressRouter);
 
 router.use("/auth", AuthRouter);

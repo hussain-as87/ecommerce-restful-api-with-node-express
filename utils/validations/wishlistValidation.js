@@ -7,7 +7,7 @@ export const createwishlistValidation = [
     .notEmpty()
     .withMessage("product id can't be null.")
     .isMongoId()
-    .withMessage("product id can't not mongo id.")
+    .withMessage("product id not mongo id.")
     .custom(async (val) => {
       const product = await Product.findById(val);
       if (!product) {
