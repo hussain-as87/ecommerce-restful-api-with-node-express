@@ -20,9 +20,9 @@ const router = express.Router();
 //nested route
 router.use("/:categoryId/subcategories", subcategoriesRoute);
 router.get("/", index);
-router.get("/:id", validationparmsRules, show);
+router.get("/:id", validationparmsRules("id"), show);
 router.post("/",permissions('admin','maneger'), [uploadImage,resizeImage],ValidationbodyRulesForCreate, create);
-router.put("/:id",permissions('admin','maneger'), [validationparmsRules,uploadImage,resizeImage], ValidationbodyRulesForUpdate, update);
-router.delete("/:id", permissions('admin'),validationparmsRules, destroy);
+router.put("/:id",permissions('admin','maneger'), [validationparmsRules("id"),uploadImage,resizeImage], ValidationbodyRulesForUpdate, update);
+router.delete("/:id", permissions('admin'),validationparmsRules("id"), destroy);
 
 export default router;

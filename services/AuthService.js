@@ -82,6 +82,9 @@ export const protect = asyncHandler(async (req, res, next) => {
       )
     );
   }
+/*   if (currentUser.active == false) {
+    return next(new ApiError("your account not active !", 401));
+  } */
 
   // 4) Check if user change his password after token created
   if (currentUser.passwordChangedAt) {
@@ -205,17 +208,17 @@ export const verifyPasswordResetCode = asyncHandler(async (req, res, next) => {
  * @access  Public
  */
 export const resetPassword = asyncHandler(async (req, res, next) => {
-    // 1) Get user based on email
-    const user = await User.findOne({ email: req.body.email });
-    if (!user) {
-      return next(
-        new ApiError(`There is no user with email ${req.body.email}`, 404)
-      );
-    }
-    // 2) Check if reset code verified
-    if (!user.passwordResetVerified) {
-      return next(new ApiError('Reset code not verified', 400));
-    }
+  // 1) Get user based on email
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return next(
+      new ApiError(`There is no user with email ${req.body.email}`, 404)
+    );
+  }
+  // 2) Check if reset code verified
+  if (!user.passwordResetVerified) {
+    return next(new ApiError("Reset code not verified", 400));
+  }
   user.password = req.body.newPassword;
   user.passwordResetCode = undefined;
   user.passwordResetExpires = undefined;

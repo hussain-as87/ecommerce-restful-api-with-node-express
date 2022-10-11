@@ -24,11 +24,20 @@ export const indexFactory = (model,optionModelName) =>
       .json({ result: documents.length, paginationResult, data: documents });
   });
 
-export const showFactory = (model) =>
+export const showFactory = (model,populationOpt) =>
   aysncHandler(async (req, res, next) => {
-    const document = await model.findById(req.params.id);
+    const { id } = req.params;
+    // 1) Build query
+    let query = model.findById(id);
+    if (populationOpt) {
+      query = query.populate(populationOpt);
+    }
+
+    // 2) Execute query
+    const document = await query;
+
     if (!document) {
-      next(new ApiError(`No ${model} with id ${id}`, 404));
+      return next(new ApiError(`No document for this id ${id}`, 404));
     }
     res.status(200).json({ data: document });
   });
@@ -44,7 +53,9 @@ export const updateFactory = (model) =>
     const document = await model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
-    if (!document) next(new ApiError(`No ${model} with id ${id}`, 404));
+    if (!document) next(new ApiError(`No ${model} with id ${req.params.id}`, 404));
+    //triger "save" event when update document
+    document.save();
     res.status(200).json({ data: document });
   });
 
@@ -53,5 +64,7 @@ export const destroyFactory = (model) =>
     const { id } = req.params;
     const document = await model.findByIdAndDelete({ _id: id });
     if (!document) next(new ApiError(`No ${model} with id ${id}`, 404));
+  //triger "remove" event when update document
+  document.remove();
     res.status(204).json({ message: `Deleted Successfully ${model} by ${id}` });
   });

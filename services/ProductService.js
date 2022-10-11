@@ -70,7 +70,7 @@ export const index = indexFactory(Product, "Product");
  * @route GET api/vi/products/:id
  * @access public
  */
-export const show = showFactory(Product);
+export const show = showFactory(Product,"reviews");
 
 /**
  * @description Create new product
