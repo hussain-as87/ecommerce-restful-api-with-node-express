@@ -2,44 +2,41 @@ import asyncHandler from "express-async-handler";
 import { User } from "../models/User.js";
 
 /**
- * @description Get list of wishlist
- * @route GET api/vi/wishlist
+ * @description Get list of user addresses
+ * @route GET api/vi/address
  * @access private
  */
 export const index = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user._id).populate("wishlist");
-
   res.status(200).json({
     status: "success",
-    results: user.wishlist.length,
-    data: user.wishlist,
+    results: user.addresses.length,
+    data: user.addresses,
   });
 });
 
 /**
- * @description Create new product to wishlist
- * @route POST api/vi/wishlist
+ * @description Create new address
+ * @route POST api/vi/address
  * @access private
  */
 export const create = asyncHandler(async (req, res, next) => {
-   // $addToSet => add productId to wishlist array if productId not exist
-
   const user = await User.findByIdAndUpdate(
     req.user._id,
-    { $addToSet: { wishlist: req.body.productId } },
+    { $addToSet: { addresses: req.body } },
     { new: true }
   );
   console.log(user.wishlist);
   res.status(200).json({
     status: "success",
-    message: "product added successfully to you'r wishlist.",
-    data: user.wishlist,
+    message: "address added successfully.",
+    data: user.addresses,
   });
 });
 
 /**
- * @description Delete specific product to wishlist by id
- * @route DELETE api/vi/wishlist/:id
+ * @description Delete specific address by id
+ * @route DELETE api/vi/address/:id
  * @access private
  */
 export const destroy = asyncHandler(async (req, res, next) => {
@@ -47,14 +44,14 @@ export const destroy = asyncHandler(async (req, res, next) => {
   const user = await User.findByIdAndUpdate(
     req.user._id,
     {
-      $pull: { wishlist: req.params.productId },
+      $pull: { addresses: { _id: req.params.addressId } },
     },
     { new: true }
   );
 
   res.status(200).json({
     status: "success",
-    message: "Product removed successfully from your wishlist.",
-    data: user.wishlist,
+    message: "address removed successfully.",
+    data: user.addresses,
   });
 });
