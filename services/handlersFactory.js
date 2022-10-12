@@ -66,5 +66,5 @@ export const destroyFactory = (model) =>
     if (!document) next(new ApiError(`No ${model} with id ${id}`, 404));
   //triger "remove" event when update document
   document.remove();
-    res.status(204).json({ message: `Deleted Successfully ${model} by ${id}` });
+   return res.status(204).json({ message: `Deleted Successfully ${model} by ${id}` });
   });

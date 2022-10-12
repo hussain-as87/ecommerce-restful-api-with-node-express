@@ -1,27 +1,34 @@
 import express from "express";
 import { validationparmsRules } from "../middlewares/ValidatorMiddleware.js";
+import { ValidationbodyRulesForCreate } from "../utils/validations/CartValidation.js";
+import { permissions } from "../services/AuthService.js";
 import {
-  ValidationbodyRulesForCreate,
-  ValidationbodyRulesForUpdate,
-} from "../utils/validations/CartValidation.js";
-import {permissions} from "../services/AuthService.js"
-import { create } from "../services/CartService.js";
+  applyCoupon,
+  clearCart,
+  create,
+  destroy,
+  index,
+  updateQuantity,
+} from "../services/CartService.js";
 const router = express.Router();
 
+router.get("/", index);
 
-/* router.get("/", index);
-router.get("/:id", validationparmsRules("id"), show); */
-router.post(
-  "/",permissions('user'),
-  ValidationbodyRulesForCreate,
-   create
+router.post("/", permissions("user"), ValidationbodyRulesForCreate, create);
+router.post("/applyCoupon", permissions("user"), applyCoupon);
+
+router.put(
+  "/:itemId",
+  permissions("user"),
+  validationparmsRules("itemId"),
+  updateQuantity
 );
-/* router.put(
-  "/:id",permissions('admin','maneger'),
-  validationparmsRules("id"),
-  ValidationbodyRulesForUpdate,
-  update
+router.delete(
+  "/:itemId",
+  permissions("user"),
+  validationparmsRules("itemId"),
+  destroy
 );
-router.delete("/:id", permissions('admin'),validationparmsRules("id"), destroy);
- */
+router.delete("/", permissions("user"), clearCart);
+
 export default router;
