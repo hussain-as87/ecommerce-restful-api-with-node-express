@@ -22,21 +22,3 @@ export const ValidationbodyRulesForCreate = [
     .withMessage("product color value must be string !"),
   validatorMiddleware,
 ];
-export const ValidationbodyRulesForUpdate = [
-  check("productId")
-    .optional()
-    .isMongoId()
-    .withMessage("product id must be mongo id !")
-    .custom(async (val) => {
-      const prodcut = await Product.findById(val);
-      if (!prodcut) {
-        throw new Error("product id is undefined");
-      }
-      return true;
-    }),
-  check("color")
-    .optional()
-    .isString()
-    .withMessage("product color value must be string !"),
-  validatorMiddleware,
-];

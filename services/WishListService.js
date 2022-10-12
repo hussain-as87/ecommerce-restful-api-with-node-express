@@ -38,7 +38,7 @@ export const create = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @description Delete specific product to wishlist by id
+ * @description Delete specific product from wishlist by id
  * @route DELETE api/vi/wishlist/:id
  * @access private
  */
@@ -52,7 +52,7 @@ export const destroy = asyncHandler(async (req, res, next) => {
     { new: true }
   );
 
-  res.status(200).json({
+ return res.status(200).json({
     status: "success",
     message: "Product removed successfully from your wishlist.",
     data: user.wishlist,
