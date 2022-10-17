@@ -5,6 +5,8 @@ const __dirname = path.dirname(__filename);
 import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
+import cors from "cors";
+import compression from "compression";
 import "colors";
 import { db_connection } from "./config/database.js";
 import { router } from "./routes/_api.js";
@@ -14,17 +16,23 @@ dotenv.config({ path: "config.env" });
 const port = process.env.PORT || 3000;
 const app = express();
 
-
+/**
+ * Misddlewares
+ */
+app.use(compression());
+app.use(cors());
+app.options("*", cors());
 db_connection();
 app.use(express.json());
 app.use(express.static(__dirname + "/public"));
-
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
   console.log(`mode: ${process.env.NODE_ENV}`);
 }
-
+/**
+ * Routers
+ */
 app.use("/api/v1", router);
 
 app.all("*", (req, res, next) => {
