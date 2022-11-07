@@ -1,3 +1,4 @@
+import path from "path";
 import express from "express";
 import categoryRouter from "./category.js";
 import subCategoryRouter from "./subCategory.js";
@@ -10,7 +11,11 @@ import WishListRouter from "./wishList.js";
 import AddressRouter from "./address.js";
 import CouponRouter from "./coupon.js";
 import CartRouter from "./cart.js";
+import OrderRouter from "./order.js";
 import { protect } from "../services/AuthService.js";
+import swaggerUi from "swagger-ui-express";
+import swagDocs from "./../swagger.json" assert { type: "json" };
+
 export const router = express.Router();
 
 router.use("/categories", protect, categoryRouter);
@@ -23,5 +28,8 @@ router.use("/wishlist", protect, WishListRouter);
 router.use("/address", protect, AddressRouter);
 router.use("/coupons", protect, CouponRouter);
 router.use("/cart", protect, CartRouter);
-
+router.use("/orders", protect, OrderRouter);
 router.use("/auth", AuthRouter);
+//swagger for testing Api
+router.use("/docs", swaggerUi.serve, swaggerUi.setup(swagDocs));
+
