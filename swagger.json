@@ -6,25 +6,12 @@
     "description": ""
   },
   "host": "127.0.0.1:8000",
-  "basePath": "/api/v1",
-  "tags": [{
-    "name": "Customers",
-    "description": "API for customers in the system"
-}],
-"schemes": [
-    "http",
-    "https"
-],
-
-"securityDefinitions": {
-    "Bearer": {
-        "type": "apiKey",
-        "name": "authorization",
-        "in": "header"
-    }
-},
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
   "paths": {
-    "/categories/": {
+    "/api/v1/categories/": {
       "get": {
         "description": "",
         "parameters": [
@@ -50,7 +37,9 @@
             "schema": {
               "type": "object",
               "properties": {
-                "image": {
+                "name": {
+                  "example": "any"
+                }, "image": {
                   "example": "any"
                 }
               }
@@ -60,7 +49,7 @@
         "responses": {}
       }
     },
-    "/categories/{id}": {
+    "/api/v1/categories/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -98,7 +87,9 @@
             "schema": {
               "type": "object",
               "properties": {
-                "image": {
+                "name": {
+                  "example": "any"
+                }, "image": {
                   "example": "any"
                 }
               }
@@ -125,7 +116,7 @@
         "responses": {}
       }
     },
-    "/categories/{categoryId}/subcategories/": {
+    "/api/v1/categories/{categoryId}/subcategories/": {
       "get": {
         "description": "",
         "parameters": [
@@ -152,113 +143,6 @@
             "required": true,
             "type": "string"
           },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "category": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/categories/{categoryId}/subcategories/{id}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "categoryId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {}
-      },
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "categoryId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {}
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "categoryId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/subcategories/": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {}
-      },
-      "post": {
-        "description": "",
-        "parameters": [
           {
             "name": "authorization",
             "in": "header",
@@ -280,7 +164,114 @@
         "responses": {}
       }
     },
-    "/subcategories/{id}": {
+    "/api/v1/categories/{categoryId}/subcategories/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/api/v1/subcategories/": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/api/v1/subcategories/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -333,7 +324,7 @@
         "responses": {}
       }
     },
-    "/brands/": {
+    "/api/v1/brands/": {
       "get": {
         "description": "",
         "parameters": [
@@ -357,7 +348,7 @@
         "responses": {}
       }
     },
-    "/brands/{id}": {
+    "/api/v1/brands/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -410,7 +401,7 @@
         "responses": {}
       }
     },
-    "/users/get": {
+    "/api/v1/users/get": {
       "get": {
         "description": "",
         "parameters": [
@@ -423,7 +414,7 @@
         "responses": {}
       }
     },
-    "/users/changeMyPassword": {
+    "/api/v1/users/changeMyPassword": {
       "put": {
         "description": "",
         "parameters": [
@@ -452,7 +443,7 @@
         }
       }
     },
-    "/users/update": {
+    "/api/v1/users/update": {
       "put": {
         "description": "",
         "parameters": [
@@ -490,7 +481,7 @@
         }
       }
     },
-    "/users/delete": {
+    "/api/v1/users/delete": {
       "delete": {
         "description": "",
         "parameters": [
@@ -507,7 +498,7 @@
         }
       }
     },
-    "/users/active": {
+    "/api/v1/users/active": {
       "put": {
         "description": "",
         "parameters": [
@@ -524,7 +515,7 @@
         }
       }
     },
-    "/users/": {
+    "/api/v1/users/": {
       "get": {
         "description": "",
         "parameters": [
@@ -560,7 +551,7 @@
         "responses": {}
       }
     },
-    "/users/{id}": {
+    "/api/v1/users/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -641,7 +632,7 @@
         "responses": {}
       }
     },
-    "/users/changePassword/{id}": {
+    "/api/v1/users/changePassword/{id}": {
       "put": {
         "description": "",
         "parameters": [
@@ -676,7 +667,7 @@
         }
       }
     },
-    "/products/": {
+    "/api/v1/products/": {
       "get": {
         "description": "",
         "parameters": [
@@ -715,7 +706,7 @@
         "responses": {}
       }
     },
-    "/products/{id}": {
+    "/api/v1/products/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -783,7 +774,7 @@
         "responses": {}
       }
     },
-    "/products/{productId}/reviews/": {
+    "/api/v1/products/{productId}/reviews/": {
       "get": {
         "description": "",
         "parameters": [
@@ -834,7 +825,7 @@
         "responses": {}
       }
     },
-    "/products/{productId}/reviews/{id}": {
+    "/api/v1/products/{productId}/reviews/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -905,7 +896,7 @@
         "responses": {}
       }
     },
-    "/reviews/": {
+    "/api/v1/reviews/": {
       "get": {
         "description": "",
         "parameters": [
@@ -944,7 +935,7 @@
         "responses": {}
       }
     },
-    "/reviews/{id}": {
+    "/api/v1/reviews/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -997,7 +988,7 @@
         "responses": {}
       }
     },
-    "/wishlist/": {
+    "/api/v1/wishlist/": {
       "get": {
         "description": "",
         "parameters": [
@@ -1041,7 +1032,7 @@
         }
       }
     },
-    "/wishlist/{productId}": {
+    "/api/v1/wishlist/{productId}": {
       "delete": {
         "description": "",
         "parameters": [
@@ -1064,7 +1055,7 @@
         }
       }
     },
-    "/address/": {
+    "/api/v1/address/": {
       "get": {
         "description": "",
         "parameters": [
@@ -1096,7 +1087,7 @@
         }
       }
     },
-    "/address/{addressId}": {
+    "/api/v1/address/{addressId}": {
       "delete": {
         "description": "",
         "parameters": [
@@ -1119,7 +1110,7 @@
         }
       }
     },
-    "/coupons/": {
+    "/api/v1/coupons/": {
       "get": {
         "description": "",
         "parameters": [
@@ -1143,7 +1134,7 @@
         "responses": {}
       }
     },
-    "/coupons/{id}": {
+    "/api/v1/coupons/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -1196,7 +1187,7 @@
         "responses": {}
       }
     },
-    "/cart/": {
+    "/api/v1/cart/": {
       "get": {
         "description": "",
         "parameters": [
@@ -1261,7 +1252,7 @@
         }
       }
     },
-    "/cart/applyCoupon": {
+    "/api/v1/cart/applyCoupon": {
       "post": {
         "description": "",
         "parameters": [
@@ -1290,7 +1281,7 @@
         }
       }
     },
-    "/cart/{itemId}": {
+    "/api/v1/cart/{itemId}": {
       "put": {
         "description": "",
         "parameters": [
@@ -1346,7 +1337,7 @@
         }
       }
     },
-    "/orders/checkout-seesion/{cartId}": {
+    "/api/v1/orders/checkout-seesion/{cartId}": {
       "get": {
         "description": "",
         "parameters": [
@@ -1369,7 +1360,7 @@
         }
       }
     },
-    "/orders/": {
+    "/api/v1/orders/": {
       "get": {
         "description": "",
         "parameters": [
@@ -1382,7 +1373,7 @@
         "responses": {}
       }
     },
-    "/orders/{id}": {
+    "/api/v1/orders/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -1401,7 +1392,7 @@
         "responses": {}
       }
     },
-    "/orders/{cartId}": {
+    "/api/v1/orders/{cartId}": {
       "post": {
         "description": "",
         "parameters": [
@@ -1436,7 +1427,7 @@
         }
       }
     },
-    "/orders/{id}/pay": {
+    "/api/v1/orders/{id}/pay": {
       "put": {
         "description": "",
         "parameters": [
@@ -1459,7 +1450,7 @@
         }
       }
     },
-    "/orders/{id}/deliver": {
+    "/api/v1/orders/{id}/deliver": {
       "put": {
         "description": "",
         "parameters": [
@@ -1482,7 +1473,7 @@
         }
       }
     },
-    "/auth/signup": {
+    "/api/v1/auth/signup": {
       "post": {
         "description": "",
         "parameters": [
@@ -1505,6 +1496,8 @@
                 },
                 "password": {
                   "example": "any"
+                } ,"passwordConfirm": {
+                  "example": "any"
                 }
               }
             }
@@ -1517,7 +1510,7 @@
         }
       }
     },
-    "/auth/login": {
+    "/api/v1/auth/login": {
       "post": {
         "description": "",
         "parameters": [
@@ -1549,7 +1542,7 @@
         }
       }
     },
-    "/auth/forgotPassword": {
+    "/api/v1/auth/forgotPassword": {
       "post": {
         "description": "",
         "parameters": [
@@ -1578,7 +1571,7 @@
         }
       }
     },
-    "/auth/verifyPasswordResetCode": {
+    "/api/v1/auth/verifyPasswordResetCode": {
       "post": {
         "description": "",
         "parameters": [
@@ -1607,7 +1600,7 @@
         }
       }
     },
-    "/auth/resetPassword": {
+    "/api/v1/auth/resetPassword": {
       "put": {
         "description": "",
         "parameters": [
@@ -1639,5 +1632,14 @@
         }
       }
     }
-  }
+  },
+  "securityDefinitions": {
+    "bearerAuth": {
+      "name": "Authorization",
+      "in": "header",
+      "type": "apiKey",
+      "description": "JWT Authorization header"
+    }
+  },
+  "security": [ { "bearerAuth": [] } ]
 }
