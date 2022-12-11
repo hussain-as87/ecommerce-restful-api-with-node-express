@@ -27,9 +27,9 @@
         "description": "",
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "name": "image",
+            "in": "formData",
+            "type": "file"
           },
           {
             "name": "body",
@@ -38,8 +38,6 @@
               "type": "object",
               "properties": {
                 "name": {
-                  "example": "any"
-                }, "image": {
                   "example": "any"
                 }
               }
