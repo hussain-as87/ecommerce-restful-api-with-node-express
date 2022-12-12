@@ -9,12 +9,10 @@ import {
   update,
   uploadImage,
 } from "../services/CategoryService.js";
-import {
-  ValidationbodyRulesForCreate,
-  ValidationbodyRulesForUpdate,
-} from "../utils/validations/CategoryValidation.js";
+
 import {permissions} from "../services/AuthService.js"
 import subcategoriesRoute from "./subCategory.js";
+import { ValidationbodyRulesForCreate, ValidationbodyRulesForUpdate } from "../utils/validations/CategoryValidation.js";
 const router = express.Router();
 
 //nested route
