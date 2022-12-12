@@ -12,7 +12,7 @@ import {
 import {
   ValidationbodyRulesForCreate,
   ValidationbodyRulesForUpdate,
-} from "../utils/validations/categoryValidation.js";
+} from "../utils/validations/CategoryValidation.js";
 import {permissions} from "../services/AuthService.js"
 import subcategoriesRoute from "./subCategory.js";
 const router = express.Router();

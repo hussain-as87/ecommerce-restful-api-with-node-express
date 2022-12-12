@@ -1,5 +1,4 @@
 import { check } from "express-validator";
-import slugify from "slugify";
 import { validatorMiddleware } from "../../middlewares/ValidatorMiddleware.js";
 import { Review } from "../../models/Review.js";
 

@@ -9,7 +9,7 @@ import {
   show,
   update
 } from "../services/SubCategoryService.js";
-import {ValidationbodyRulesForCreate,ValidationbodyRulesForUpdate}from "../utils/validations/subCategoryValidation.js"
+import {ValidationbodyRulesForCreate,ValidationbodyRulesForUpdate}from "../utils/validations/SubCategoryValidation.js"
 import {permissions} from "../services/AuthService.js"
 // to allow us to access parameters on other routes
 const router = express.Router({ mergeParams: true });

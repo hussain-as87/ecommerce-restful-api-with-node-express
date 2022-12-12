@@ -6,7 +6,7 @@ import {
   ValidationbodyRulesForCreate,
   ValidationbodyRulesForDelete,
   ValidationbodyRulesForUpdate,
-} from "../utils/validations/reviewValidation.js";
+} from "../utils/validations/ReviewValidation.js";
 import { permissions, protect } from "../services/AuthService.js";
 import {
   create,

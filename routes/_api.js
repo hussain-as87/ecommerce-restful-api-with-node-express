@@ -1,4 +1,4 @@
-import path from "path";
+//import path from "path";
 import express from "express";
 import categoryRouter from "./category.js";
 import subCategoryRouter from "./subCategory.js";
@@ -13,8 +13,8 @@ import CouponRouter from "./coupon.js";
 import CartRouter from "./cart.js";
 import OrderRouter from "./order.js";
 import { protect } from "../services/AuthService.js";
-import swaggerUi from "swagger-ui-express";
-/* import swagDocs from "./../swagger.json" assert { type: "json" };
+/*import swaggerUi from "swagger-ui-express";
+ import swagDocs from "./../swagger.json" assert { type: "json" };
  */
 export const router = express.Router();
 
