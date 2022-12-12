@@ -14,7 +14,7 @@ import { validationparmsRules } from "../middlewares/ValidatorMiddleware.js";
 const router = express.Router();
 
 router.get(
-  "/checkout-seesion/:cartId",
+  "/checkout-session/:cartId",
   [validationparmsRules("cartId"), permissions("user")],
   checkoutSession
 );

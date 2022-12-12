@@ -14,8 +14,8 @@ import CartRouter from "./cart.js";
 import OrderRouter from "./order.js";
 import { protect } from "../services/AuthService.js";
 import swaggerUi from "swagger-ui-express";
-import swagDocs from "./../swagger.json" assert { type: "json" };
-
+/* import swagDocs from "./../swagger.json" assert { type: "json" };
+ */
 export const router = express.Router();
 
 router.use("/categories", protect, categoryRouter);
@@ -31,5 +31,5 @@ router.use("/cart", protect, CartRouter);
 router.use("/orders", protect, OrderRouter);
 router.use("/auth", AuthRouter);
 //swagger for testing Api
-router.use("/docs", swaggerUi.serve, swaggerUi.setup(swagDocs));
-
+/* router.use("/docs", swaggerUi.serve, swaggerUi.setup(swagDocs));
+ */
