@@ -1,13 +1,5 @@
 import express from "express";
-import {
-  createFilterObj,
-  setProductIdAndUserIdToBody,
-  create,
-  update,
-  destroy,
-  index,
-  show,
-} from "../services/reviewService.js";
+
 import { validationparmsRules } from "../middlewares/ValidatorMiddleware.js";
 
 import {
@@ -16,6 +8,15 @@ import {
   ValidationbodyRulesForUpdate,
 } from "../utils/validations/reviewValidation.js";
 import { permissions, protect } from "../services/AuthService.js";
+import {
+  create,
+  createFilterObj,
+  destroy,
+  index,
+  setProductIdAndUserIdToBody,
+  show,
+  update,
+} from "../services/ReviewService.js";
 
 const router = express.Router({ mergeParams: true });
 
@@ -39,5 +40,5 @@ router
     ValidationbodyRulesForDelete,
     destroy
   );
-
+s;
 export default router;
