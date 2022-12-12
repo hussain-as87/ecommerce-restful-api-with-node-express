@@ -40,5 +40,5 @@ router
     ValidationbodyRulesForDelete,
     destroy
   );
-s;
+
 export default router;
