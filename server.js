@@ -36,7 +36,7 @@ if (process.env.NODE_ENV === "development") {
  */
 app.use("/api/v1", router);
 //checkout webhook
-router.post('/webhook',express.raw({type:"application/json"}),webhookCheckout);
+router.post('/webhook-checkout',express.raw({type:"application/json"}),webhookCheckout);
 
 app.all("*", (req, res, next) => {
   // create error and send to error handling middleware
