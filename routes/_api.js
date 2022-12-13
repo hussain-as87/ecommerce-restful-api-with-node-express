@@ -13,7 +13,6 @@ import CouponRouter from "./coupon.js";
 import CartRouter from "./cart.js";
 import OrderRouter from "./order.js";
 import { protect } from "../services/AuthService.js";
-import { webhookCheckout } from "../services/OrderService.js";
 /*import swaggerUi from "swagger-ui-express";
  import swagDocs from "./../swagger.json" assert { type: "json" };
  */
@@ -35,5 +34,3 @@ router.use("/auth", AuthRouter);
 /* router.use("/docs", swaggerUi.serve, swaggerUi.setup(swagDocs));
  */
 
-//checkout webhook
-router.post('/webhook',express.raw({type:"application/json"}),webhookCheckout);
