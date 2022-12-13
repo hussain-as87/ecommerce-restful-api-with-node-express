@@ -1,14 +1,10 @@
 import Stripe from "stripe";
 import asyncHandler from "express-async-handler";
-import {
-  indexFactory,
-  showFactory,
-} from "./handlersFactory.js";
+import { indexFactory, showFactory } from "./handlersFactory.js";
 import { ApiError } from "../utils/apiError.js";
 import { Order } from "../models/Order.js";
 import { Cart } from "../models/Cart.js";
 import { Product } from "../models/Product.js";
-
 
 export const filterOrderForLoggedUser = asyncHandler(async (req, res, next) => {
   if (req.user.role === "user") req.filterObj = { user: req.user._id };
@@ -133,7 +129,7 @@ export const checkoutSession = asyncHandler(async (req, res, next) => {
 
   // 3) Create stripe checkout session
   const session = await stripe.checkout.sessions.create({
-   /*  line_items: [
+    /*  line_items: [
       {
         name: req.user.name,
         unit_amount: totalOrderPrice * 100,
@@ -141,24 +137,52 @@ export const checkoutSession = asyncHandler(async (req, res, next) => {
         quantity: 1,
       },
     ], */
-    line_items: [{
-      price_data: {
-        currency: 'usd',
-        product_data: {
-          name:req.user.name
+    line_items: [
+      {
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: req.user.name,
+          },
+          unit_amount: totalOrderPrice * 100,
         },
-        unit_amount: totalOrderPrice * 100,
+        quantity: 1,
       },
-      quantity: 1,
-    }],
-    mode: 'payment',
-    success_url: `${req.protocol}://${req.get('host')}/orders`,
-    cancel_url: `${req.protocol}://${req.get('host')}/cart`,
+    ],
+    mode: "payment",
+    success_url: `${req.protocol}://${req.get("host")}/orders`,
+    cancel_url: `${req.protocol}://${req.get("host")}/cart`,
     customer_email: req.user.email,
     client_reference_id: req.params.cartId,
     metadata: req.body.shippingAddress,
   });
 
   // 4) send session to response
-  res.status(200).json({ status: 'success', session });
+  res.status(200).json({ status: "success", session });
+});
+
+/**
+ * @description webhookCheckout
+ * @route POST api/vi/webhookCheckout
+ * @access protected(User)
+ */
+export const webhookCheckout = asyncHandler(async (req, res, next) => {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+  const sig = req.headers["stripe-signature"];
+
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET_KEY
+    );
+  } catch (err) {
+    res.status(400).send(`Webhook Error: ${err.message}`);
+    return;
+  }
+  if(event.type == "checkout.session.completed"){
+    console.log('Create order here....');
+  }
 });
