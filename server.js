@@ -12,7 +12,6 @@ import { db_connection } from "./config/database.js";
 import { router } from "./routes/_api.js";
 import { ApiError } from "./utils/apiError.js";
 import { globalError } from "./middlewares/errorMiddleware.js";
-import { webhookCheckout } from "./services/OrderService.js";
 dotenv.config({ path: "config.env" });
 const port = process.env.PORT || 3000;
 const app = express();
@@ -35,8 +34,7 @@ if (process.env.NODE_ENV === "development") {
  * Routers
  */
 app.use("/api/v1", router);
-//checkout webhook
-router.post('/webhook-checkout',express.raw({type:"application/json"}),webhookCheckout);
+
 
 app.all("*", (req, res, next) => {
   // create error and send to error handling middleware
