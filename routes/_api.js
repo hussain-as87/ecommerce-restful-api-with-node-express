@@ -1,5 +1,6 @@
 //import path from "path";
 import express from "express";
+import bodyParser from "body-parser";
 import categoryRouter from "./category.js";
 import subCategoryRouter from "./subCategory.js";
 import BrandRouter from "./brand.js";
@@ -31,7 +32,7 @@ router.use("/coupons", protect, CouponRouter);
 router.use("/cart", protect, CartRouter);
 router.use("/orders", protect, OrderRouter);
 //checkout webhook
-router.post('/webhook-checkout',express.raw({type:"application/json"}),webhookCheckout);
+router.post('/webhook-checkout',bodyParser.raw({type:"application/json"}),webhookCheckout);
 router.use("/auth", AuthRouter);
 //swagger for testing Api
 /* router.use("/docs", swaggerUi.serve, swaggerUi.setup(swagDocs));
