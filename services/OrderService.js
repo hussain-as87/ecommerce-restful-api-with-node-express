@@ -203,12 +203,10 @@ export const createCardOrder = async (session) => {
  * @route POST api/vi/webhookCheckout
  * @access protected(User)
  */
-export const webhookCheckout = asyncHandler(async (req, res, next) => {
+export const webhookCheckout = asyncHandler(async (req, res) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   const sig = req.headers["stripe-signature"];
-
   let event;
-
   try {
     event = stripe.webhooks.constructEvent(
       req.body,
