@@ -7,7 +7,6 @@ import {
   show,
   updateOrderDeliveredStatus,
   updateOrderPaidStatus,
-  webhookCheckout
 } from "../services/OrderService.js";
 import { permissions } from "../services/AuthService.js";
 import { validationparmsRules } from "../middlewares/ValidatorMiddleware.js";
@@ -15,8 +14,7 @@ import { validationparmsRules } from "../middlewares/ValidatorMiddleware.js";
 const router = express.Router();
 
 
-//checkout webhook
-router.post('/webhook-checkout',express.raw({type:"application/json"}),webhookCheckout);
+
 router.get(
   "/checkout-session/:cartId",
   [validationparmsRules("cartId"), permissions("user")],
