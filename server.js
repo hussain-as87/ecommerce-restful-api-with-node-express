@@ -33,14 +33,6 @@ if (process.env.NODE_ENV === "development") {
 /**
  * Routers
  */
-// Use JSON parser for all non-webhook routes
-app.use((req, res, next) => {
-  if (req.originalUrl === '/api/v1/webhook') {
-    next();
-  } else {
-    express.json()(req, res, next);
-  }
-});
 app.use("/api/v1", router);
 
 
