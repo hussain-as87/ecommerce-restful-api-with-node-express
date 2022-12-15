@@ -14,7 +14,6 @@ import CouponRouter from "./coupon.js";
 import CartRouter from "./cart.js";
 import OrderRouter from "./order.js";
 import { protect } from "../services/AuthService.js";
-import { webhookCheckout } from "../services/OrderService.js";
 /*import swaggerUi from "swagger-ui-express";
  import swagDocs from "./../swagger.json" assert { type: "json" };
  */
@@ -31,8 +30,6 @@ router.use("/address", protect, AddressRouter);
 router.use("/coupons", protect, CouponRouter);
 router.use("/cart", protect, CartRouter);
 router.use("/orders", protect, OrderRouter);
-//checkout webhook
-router.post('/webhook-checkout',[bodyParser.raw({type:"application/json"}),webhookCheckout]);
 router.use("/auth", AuthRouter);
 //swagger for testing Api
 /* router.use("/docs", swaggerUi.serve, swaggerUi.setup(swagDocs));
