@@ -1,6 +1,5 @@
 //import path from "path";
 import express from "express";
-import bodyParser from "body-parser";
 import categoryRouter from "./category.js";
 import subCategoryRouter from "./subCategory.js";
 import BrandRouter from "./brand.js";
@@ -14,6 +13,7 @@ import CouponRouter from "./coupon.js";
 import CartRouter from "./cart.js";
 import OrderRouter from "./order.js";
 import { protect } from "../services/AuthService.js";
+import { webhookCheckout } from "../services/OrderService.js";
 /*import swaggerUi from "swagger-ui-express";
  import swagDocs from "./../swagger.json" assert { type: "json" };
  */
@@ -31,6 +31,9 @@ router.use("/coupons", protect, CouponRouter);
 router.use("/cart", protect, CartRouter);
 router.use("/orders", protect, OrderRouter);
 router.use("/auth", AuthRouter);
+// Stripe requires the raw body to construct the event
+router.post('/webhook', express.raw({type: 'application/json'}),webhookCheckout);
+
 //swagger for testing Api
 /* router.use("/docs", swaggerUi.serve, swaggerUi.setup(swagDocs));
  */
