@@ -12,12 +12,13 @@ import { db_connection } from "./config/database.js";
 import { router } from "./routes/_api.js";
 import { ApiError } from "./utils/apiError.js";
 import { globalError } from "./middlewares/errorMiddleware.js";
+import { webhookCheckout } from "./services/OrderService.js";
 dotenv.config({ path: "config.env" });
 const port = process.env.PORT || 3000;
 const app = express();
 
 /**
- * Misddlewares
+ * @Middlewares
  */
 app.use(compression());
 app.use(cors());
@@ -31,9 +32,15 @@ if (process.env.NODE_ENV === "development") {
   console.log(`mode: ${process.env.NODE_ENV}`);
 }
 /**
- * Routers
+ * @Routers
  */
 app.use("/api/v1", router);
+// Checkout webhook
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  webhookCheckout
+);
 
 
 app.all("*", (req, res, next) => {
