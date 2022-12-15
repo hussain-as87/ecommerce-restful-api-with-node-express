@@ -185,7 +185,7 @@ export const createCardOrder = async (session) => {
     paymentMethodType: "card",
   });
 
-    //after creating order, decrement product quantity, incrememt prodcut sold
+  //after creating order, decrement product quantity, incrememt prodcut sold
   if (order) {
     const bulkOption = cart.cartItems.map((item) => ({
       updateOne: {
@@ -203,11 +203,12 @@ export const createCardOrder = async (session) => {
  * @route POST api/vi/webhookCheckout
  * @access protected(User)
  */
-export const webhookCheckout = asyncHandler(/*async  (req, res) => {
-  const stripe = new Stripe(  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-);
+export const webhookCheckout = asyncHandler(async (req, res) => {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   const sig = req.headers["stripe-signature"];
+
   let event;
+
   try {
     event = stripe.webhooks.constructEvent(
       req.body,
@@ -215,32 +216,16 @@ export const webhookCheckout = asyncHandler(/*async  (req, res) => {
       process.env.STRIPE_WEBHOOK_SECRET_KEY
     );
   } catch (err) {
-    res.status(400).send(`Webhook Error: ${err.message}`);
-    return;
-  }
-  if (event.type == "checkout.session.completed") {
-    //create order
-    createCardOrder(event.data.object);
-  }
-  res.status(200).json({recived:true})
-}*/async (req, res) => {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-  const sig = req.headers['stripe-signature'];
-
-  let event;
-
-  try {
-    event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET_KEY);
-  } catch (err) {
     // On error, log and return the error message
     console.log(`❌ Error message: ${err.message}`);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
-
-  // Successfully constructed event
-  console.log('✅ Success:', event.id);
-
-  // Return a response to acknowledge receipt of the event
-  res.json({received: true});
-}); 
-
+  if (event.type == "checkout.session.completed") {
+    //create order
+    createCardOrder(event.data.object);
+    // Successfully constructed event
+    console.log("✅ Success:", event.id);
+    // Return a response to acknowledge receipt of the event
+    res.json({ received: true });
+  }
+});
