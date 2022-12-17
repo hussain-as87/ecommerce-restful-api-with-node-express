@@ -210,17 +210,17 @@ export const webhookCheckout = asyncHandler(async (req, res, next) => {
   let event;
   console.log(sig);
   res.send("ok");
-  try {
-    event = stripe.webhooks.constructEvent(
+ /*  try { */
+    event = await stripe.webhooks.constructEvent(
       req.body,
       sig,
       process.env.STRIPE_WEBHOOK_SECRET_KEY
     );
-  } catch (err) {
+/*   } catch (err) {
     // On error, log and return the error message
     console.log(`❌ Error message: ${err.message}`);
     return res.status(400).send(`Webhook Error: ${err.message}`);
-  }
+  } */
   if (event.type == "checkout.session.completed") {
     //create order
     createCardOrder(event.data.object);
