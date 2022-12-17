@@ -12,6 +12,7 @@ import { db_connection } from "./config/database.js";
 import { router } from "./routes/_api.js";
 import { ApiError } from "./utils/apiError.js";
 import { globalError } from "./middlewares/errorMiddleware.js";
+import { webhookCheckout } from "./services/OrderService.js";
 dotenv.config({ path: "config.env" });
 const port = process.env.PORT || 3000;
 const app = express();
@@ -35,13 +36,14 @@ if (process.env.NODE_ENV === "development") {
  */
 // Use JSON parser for all non-webhook routes
 app.use((req, res, next) => {
-  if (req.originalUrl === '/api/v1/webhook-checkout') {
+  if (req.originalUrl === '/webhook') {
     next();
   } else {
     express.json()(req, res, next);
   }
 });
-
+// Stripe requires the raw body to construct the event
+router.post('/webhook', express.raw({type: 'application/json'}),webhookCheckout);
 app.use("/api/v1", router);
 
 
