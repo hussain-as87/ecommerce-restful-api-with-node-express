@@ -6,6 +6,7 @@ import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import cors from "cors";
+import bodyParser from "body-parser";
 import compression from "compression";
 import "colors";
 import { db_connection } from "./config/database.js";
@@ -25,6 +26,8 @@ app.options("*", cors());
 db_connection();
 app.use(express.json());
 app.use(express.static(__dirname + "/public"));
+app.use(bodyParser.raw({type: "*/*"}))
+app.use(bodyParser.json())
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));

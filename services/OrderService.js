@@ -203,12 +203,12 @@ export const createCardOrder = async (session) => {
  * @route POST api/vi/webhookCheckout
  * @access protected(User)
  */
-export const webhookCheckout = asyncHandler(async (req, res, next) => {
+export const webhookCheckout = asyncHandler(async (err, req, res, next) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   const sig = req.headers["stripe-signature"];
 
   let event;
-  
+
   event = await stripe.webhooks.constructEvent(
     req.body,
     sig,
@@ -217,7 +217,7 @@ export const webhookCheckout = asyncHandler(async (req, res, next) => {
   if (!event) {
     // On error, log and return the error message
     console.log(`❌ Error message: ${err.message}`);
-    return res.status(400).send(`Webhook Error: ${err.message}`);
+    return new ApiError(`Webhook Error: ${err.message}`, 400);
   } else if (event.type == "checkout.session.completed") {
     //create order
     createCardOrder(event.data.object);
