@@ -31,6 +31,7 @@ router.use("/coupons", protect, CouponRouter);
 router.use("/cart", protect, CartRouter);
 router.use("/orders", protect, OrderRouter);
 router.use("/auth", AuthRouter);
+
 // Stripe requires the raw body to construct the event
 router.post('/webhook-checkout', express.raw({type: 'application/json'}),webhookCheckout);
 
