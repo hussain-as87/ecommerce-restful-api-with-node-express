@@ -205,7 +205,7 @@ export const createCardOrder = async (session) => {
  */
 export const webhookCheckout = asyncHandler(async (err, req, res, next) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-  const sig = req.headers["stripe-signature"];
+  const sig = req.headers['stripe-signature'];
 
   let event;
 
