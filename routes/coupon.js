@@ -1,9 +1,9 @@
 import express from "express";
 import { validationparmsRules } from "../middlewares/ValidatorMiddleware.js";
-/* import {
+ import {
   ValidationbodyRulesForCreate,
   ValidationbodyRulesForUpdate,
-} from "../utils/validations/CouponValidation.js"; */
+} from "../utils/validations/CouponValidation.js";
 import {permissions} from "../services/AuthService.js"
 import { create, destroy, index, show, update } from "../services/CouponService.js";
 const router = express.Router();
@@ -13,14 +13,14 @@ router.get("/", index);
 router.get("/:id", validationparmsRules("id"), show);
 router.post(
   "/",permissions('admin','maneger'),
-/*   ValidationbodyRulesForCreate,
- */  create
+   ValidationbodyRulesForCreate,
+   create
 );
 router.put(
   "/:id",permissions('admin','maneger'),
   validationparmsRules("id"),
-/*   ValidationbodyRulesForUpdate,
- */  update
+   ValidationbodyRulesForUpdate,
+   update
 );
 router.delete("/:id", permissions('admin'),validationparmsRules("id"), destroy);
 
