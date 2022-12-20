@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler";
-import { User } from "../models/User.js";
+import {User} from "../models/User.js";
 
 /**
  * @description Get list of user addresses
@@ -7,12 +7,12 @@ import { User } from "../models/User.js";
  * @access private
  */
 export const index = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user._id).populate("wishlist");
-  res.status(200).json({
-    status: "success",
-    results: user.addresses.length,
-    data: user.addresses,
-  });
+    const user = await User.findById(req.user._id).populate("wishlist");
+    res.status(200).json({
+        status: "success",
+        results: user.addresses.length,
+        data: user.addresses,
+    });
 });
 
 /**
@@ -21,17 +21,17 @@ export const index = asyncHandler(async (req, res, next) => {
  * @access private
  */
 export const create = asyncHandler(async (req, res, next) => {
-  const user = await User.findByIdAndUpdate(
-    req.user._id,
-    { $addToSet: { addresses: req.body } },
-    { new: true }
-  );
-  console.log(user.wishlist);
-  res.status(200).json({
-    status: "success",
-    message: "address added successfully.",
-    data: user.addresses,
-  });
+    const user = await User.findByIdAndUpdate(
+        req.user._id,
+        {$addToSet: {addresses: req.body}},
+        {new: true}
+    );
+    console.log(user.wishlist);
+    res.status(200).json({
+        status: "success",
+        message: "address added successfully.",
+        data: user.addresses,
+    });
 });
 
 /**
@@ -40,18 +40,18 @@ export const create = asyncHandler(async (req, res, next) => {
  * @access private
  */
 export const destroy = asyncHandler(async (req, res, next) => {
-  // $pull => remove productId from wishlist array if productId not exist
-  const user = await User.findByIdAndUpdate(
-    req.user._id,
-    {
-      $pull: { addresses: { _id: req.params.addressId } },
-    },
-    { new: true }
-  );
+    // $pull => remove productId from wishlist array if productId not exist
+    const user = await User.findByIdAndUpdate(
+        req.user._id,
+        {
+            $pull: {addresses: {_id: req.params.addressId}},
+        },
+        {new: true}
+    );
 
-  return res.status(200).json({
-    status: "success",
-    message: "address removed successfully.",
-    data: user.addresses,
-  });
+    return res.status(200).json({
+        status: "success",
+        message: "address removed successfully.",
+        data: user.addresses,
+    });
 });

@@ -7,7 +7,7 @@ import {Cart} from "../models/Cart.js";
 import {Product} from "../models/Product.js";
 import {User} from "../models/User.js";
 
-export const filterOrderForLoggedUser = asyncHandler(async (req,res, next) => {
+export const filterOrderForLoggedUser = asyncHandler(async (req, res, next) => {
     if (req.user.role === "user") req.filterObj = {user: req.user._id};
     next();
 });
@@ -73,7 +73,7 @@ export const create = asyncHandler(async (err, req, res, next) => {
  * @route PUT api/vi/orders/:id/pay
  * @access protected(Admin-Manager)
  */
-export const updateOrderPaidStatus = asyncHandler(async (err, req,res, next) => {
+export const updateOrderPaidStatus = asyncHandler(async (err, req, res, next) => {
     const {id} = req.params;
     const order = await Order.findById(id);
     if (!order) {
@@ -90,7 +90,7 @@ export const updateOrderPaidStatus = asyncHandler(async (err, req,res, next) => 
  * @access protected(Admin-Manager)
  */
 export const updateOrderDeliveredStatus = asyncHandler(
-    async (err, req,res, next) => {
+    async (err, req, res, next) => {
         const {id} = req.params;
         const order = await Order.findById(id);
         if (!order) {
@@ -107,7 +107,7 @@ export const updateOrderDeliveredStatus = asyncHandler(
  * @route GET api/vi/orders/checkout-session/:cartId
  * @access protected(Admin-Manager)
  */
-export const checkoutSession = asyncHandler(async (err, req,res, next) => {
+export const checkoutSession = asyncHandler(async (err, req, res, next) => {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     // app settings
     const taxPrice = 0;
@@ -203,7 +203,7 @@ export const createCardOrder = async (session) => {
  * @route POST api/vi/webhookCheckout
  * @access protected(User)
  */
-export const webhookCheckout = asyncHandler(async (err, req,res, next) => {
+export const webhookCheckout = asyncHandler(async (err, req, res, next) => {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const sig = req.headers['stripe-signature'];
 

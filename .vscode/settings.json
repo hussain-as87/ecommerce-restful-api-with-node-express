@@ -1,17 +1,17 @@
 {
-    "grammarly.selectors": [
-        {
-            "language": "javascript",
-            "scheme": "file"
-        }
-    ],
-    "separators.enabledSymbols": [
-        "Classes",
-        "Enums",
-        "Functions",
-        "Interfaces",
-        "Methods",
-        "Namespaces",
-        "Structs"
-    ]
+  "grammarly.selectors": [
+    {
+      "language": "javascript",
+      "scheme": "file"
+    }
+  ],
+  "separators.enabledSymbols": [
+    "Classes",
+    "Enums",
+    "Functions",
+    "Interfaces",
+    "Methods",
+    "Namespaces",
+    "Structs"
+  ]
 }

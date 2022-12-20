@@ -1,10 +1,10 @@
-import { Coupon } from "../models/Coupon.js";
+import {Coupon} from "../models/Coupon.js";
 import {
-  createFactory,
-  destroyFactory,
-  indexFactory,
-  showFactory,
-  updateFactory,
+    createFactory,
+    destroyFactory,
+    indexFactory,
+    showFactory,
+    updateFactory,
 } from "./handlersFactory.js";
 
 

@@ -1,15 +1,15 @@
-import { Category } from "../models/Category.js";
+import {Category} from "../models/Category.js";
 import {
-  createFactory,
-  destroyFactory,
-  indexFactory,
-  showFactory,
-  updateFactory,
+    createFactory,
+    destroyFactory,
+    indexFactory,
+    showFactory,
+    updateFactory,
 } from "./handlersFactory.js";
-import { v4 as uuidv4 } from "uuid";
+import {v4 as uuidv4} from "uuid";
 import sharp from "sharp";
 import asyncHandler from "express-async-handler";
-import { uploadSingleImage } from "../middlewares/uploadImageMiddleware.js";
+import {uploadSingleImage} from "../middlewares/uploadImageMiddleware.js";
 
 /**
  * @description upload image
@@ -20,17 +20,17 @@ export const uploadImage = uploadSingleImage("image");
  * @description upload image
  */
 export const resizeImage = asyncHandler(async (req, res, next) => {
-  const filename = `category-${uuidv4()}-${Date.now()}.jpeg`;
-  if (req.file) {
-    await sharp(req.file.buffer)
-      .resize(600, 600)
-      .toFormat("jpeg")
-      .jpeg({ quality: 90 })
-      .toFile(`public/uploads/categories/${filename}`);
-    //save image in Database
-    req.body.image = filename;
-  }
-  next();
+    const filename = `category-${uuidv4()}-${Date.now()}.jpeg`;
+    if (req.file) {
+        await sharp(req.file.buffer)
+            .resize(600, 600)
+            .toFormat("jpeg")
+            .jpeg({quality: 90})
+            .toFile(`public/uploads/categories/${filename}`);
+        //save image in Database
+        req.body.image = filename;
+    }
+    next();
 });
 
 /**

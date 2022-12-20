@@ -1,11 +1,11 @@
-import { SubCategory } from "../models/SubCategory.js";
+import {SubCategory} from "../models/SubCategory.js";
 
 import {
-  createFactory,
-  destroyFactory,
-  indexFactory,
-  showFactory,
-  updateFactory,
+    createFactory,
+    destroyFactory,
+    indexFactory,
+    showFactory,
+    updateFactory,
 } from "./handlersFactory.js";
 
 /**
@@ -13,22 +13,22 @@ import {
  * @access public
  */
 export const setCategoryId = (req, res, next) => {
-  if (!req.body.category) {
-    req.body.category = req.params.categoryId;
-  }
-  next();
+    if (!req.body.category) {
+        req.body.category = req.params.categoryId;
+    }
+    next();
 };
 /**
  * @description middleware for Set category id from params
  * @access public
  */
 export const createFilterObj = (req, res, next) => {
-  let filterObject = {};
-  if (req.params.categoryId) {
-    filterObject = { category: req.params.categoryId };
-    req.filterObject = filterObject;
-  }
-  next();
+    let filterObject = {};
+    if (req.params.categoryId) {
+        filterObject = {category: req.params.categoryId};
+        req.filterObject = filterObject;
+    }
+    next();
 };
 
 /**

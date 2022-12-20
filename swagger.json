@@ -87,7 +87,8 @@
               "properties": {
                 "name": {
                   "example": "any"
-                }, "image": {
+                },
+                "image": {
                   "example": "any"
                 }
               }
@@ -1494,7 +1495,8 @@
                 },
                 "password": {
                   "example": "any"
-                } ,"passwordConfirm": {
+                },
+                "passwordConfirm": {
                   "example": "any"
                 }
               }
@@ -1639,5 +1641,9 @@
       "description": "JWT Authorization header"
     }
   },
-  "security": [ { "bearerAuth": [] } ]
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
 }
