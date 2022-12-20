@@ -26,7 +26,7 @@ app.use(compression());
 app.use(cors());
 app.options("*", cors());
 db_connection();
-app.use(express.json());
+app.use(express.json({limit:"50kb"}));
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.raw({type: "*/*"}))
 app.use(bodyParser.json())
