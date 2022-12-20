@@ -205,7 +205,7 @@ export const createCardOrder = async (session) => {
  */
 export const webhookCheckout = asyncHandler(async (err, req, res, next) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-  const sig = req.headers['stripe-signature'];
+  const sig = req.headers["stripe-signature"];
 
   let event;
 
@@ -215,15 +215,13 @@ export const webhookCheckout = asyncHandler(async (err, req, res, next) => {
     process.env.STRIPE_WEBHOOK_SECRET_KEY
   );
   if (!event) {
-    // On error, log and return the error message
     console.log(`❌ Error message: ${err.message}`);
     return new ApiError(`Webhook Error: ${err.message}`, 400);
   } else if (event.type == "checkout.session.completed") {
     //create order
     createCardOrder(event.data.object);
-    // Successfully constructed event
+
     console.log("✅ Success:", event.id);
-    // Return a response to acknowledge receipt of the event
-    res.json({ received: true });
+    return res.json({ received: true });
   }
 });
