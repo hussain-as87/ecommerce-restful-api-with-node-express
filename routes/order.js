@@ -38,5 +38,5 @@ router.put(
     validationparmsRules("id"),
     updateOrderDeliveredStatus
 );
- router.delete("/:id", permissions('admin'),validationparmsRules("id"), destroy);
+ //router.delete("/:id", permissions('admin'),validationparmsRules("id"), destroy);
 export default router;
