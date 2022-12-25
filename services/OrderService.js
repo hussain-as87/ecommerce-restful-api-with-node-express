@@ -29,7 +29,7 @@ export const show = showFactory(Order);
  * @route POST api/vi/orders
  * @access private
  */
-export const create = asyncHandler(async (err, req, res, next) => {
+export const create = asyncHandler(async ( req, res, next) => {
     //app setting
     const taxPrice = 0,
         shippingPrice = 0;
@@ -73,7 +73,7 @@ export const create = asyncHandler(async (err, req, res, next) => {
  * @route PUT api/vi/orders/:id/pay
  * @access protected(Admin-Manager)
  */
-export const updateOrderPaidStatus = asyncHandler(async (err, req, res, next) => {
+export const updateOrderPaidStatus = asyncHandler(async ( req, res, next) => {
     const {id} = req.params;
     const order = await Order.findById(id);
     if (!order) {
@@ -107,7 +107,7 @@ export const updateOrderDeliveredStatus = asyncHandler(
  * @route GET api/vi/orders/checkout-session/:cartId
  * @access protected(Admin-Manager)
  */
-export const checkoutSession = asyncHandler(async (err, req, res, next) => {
+export const checkoutSession = asyncHandler(async ( req, res, next) => {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     // app settings
     const taxPrice = 0;
@@ -203,7 +203,7 @@ export const createCardOrder = async (session) => {
  * @route POST api/vi/webhookCheckout
  * @access protected(User)
  */
-export const webhookCheckout = asyncHandler(async (err, req, res, next) => {
+export const webhookCheckout = asyncHandler(async ( req, res, next) => {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const sig = req.headers['stripe-signature'];
 
@@ -215,8 +215,8 @@ export const webhookCheckout = asyncHandler(async (err, req, res, next) => {
         process.env.STRIPE_WEBHOOK_SECRET_KEY
     );
     if (!event) {
-        console.log(`❌ Error message: ${err.message}`);
-        return new ApiError(`Webhook Error: ${err.message}`, 400);
+        console.log(`❌ Error message: `);
+        return new ApiError(`Webhook Error`, 400);
     } else if (event.type == "checkout.session.completed") {
         //create order
         createCardOrder(event.data.object);
