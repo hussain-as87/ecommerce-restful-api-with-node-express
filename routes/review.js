@@ -2,11 +2,11 @@ import express from "express";
 
 import {validationparmsRules} from "../middlewares/ValidatorMiddleware.js";
 
-/*import {
+import {
     ValidationbodyRulesForCreate,
     ValidationbodyRulesForDelete,
     ValidationbodyRulesForUpdate,
-} from "../utils/validations/ReviewValidation.js";*/
+} from "../utils/validations/ReviewValidation.js";
 import {permissions, protect} from "../services/AuthService.js";
 import {
     create,
@@ -27,21 +27,21 @@ router
         protect,
         permissions("user"),
         setProductIdAndUserIdToBody,
-/*
+
         ValidationbodyRulesForCreate,
-*/
+
         create
     );
 router
     .route("/:id")
     .get(validationparmsRules("id"), show)
-    .put(protect, permissions("user"),/* ValidationbodyRulesForUpdate,*/ update)
+    .put(protect, permissions("user"),ValidationbodyRulesForUpdate, update)
     .delete(
         protect,
         permissions("user", "manager", "admin"),
-/*
+
         ValidationbodyRulesForDelete,
-*/
+
         destroy
     );
 

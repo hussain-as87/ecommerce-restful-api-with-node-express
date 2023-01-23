@@ -8,7 +8,8 @@
     "start:dev": "nodemon server.js",
     "start:prod": "SET NODE_ENV=production & nodemon server.js",
     "seed": "cd .\\utils\\dummyData\\ & node seeder.js -i",
-    "seed:rollback": "cd .\\utils\\dummyData\\ & node seeder.js -d"
+    "seed:rollback": "cd .\\utils\\dummyData\\ & node seeder.js -d",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
