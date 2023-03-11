@@ -28,13 +28,13 @@ router.get("/:id", validationparmsRules("id"), show);
 router.post("/:cartId", permissions("user"), create);
 router.put(
     "/:id/pay",
-    permissions("admin", "maneger"),
+    permissions("admin", "manager"),
     validationparmsRules("id"),
     updateOrderPaidStatus
 );
 router.put(
     "/:id/deliver",
-    permissions("admin", "maneger"),
+    permissions("admin", "manager"),
     validationparmsRules("id"),
     updateOrderDeliveredStatus
 );

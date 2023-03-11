@@ -20,13 +20,13 @@ import {permissions} from "../services/AuthService.js"
 router.get("/", index);
 router.get("/:id", validationparmsRules("id"), show);
 router.post(
-    "/", permissions('admin', 'maneger'),
+    "/", permissions('admin', 'manager'),
     [uploadImage, resizeImage],
     ValidationbodyRulesForCreate,
     create
 );
 router.put(
-    "/:id", permissions('admin', 'maneger'),
+    "/:id", permissions('admin', 'manager'),
     [validationparmsRules("id"), uploadImage, resizeImage],
     ValidationbodyRulesForUpdate,
     update

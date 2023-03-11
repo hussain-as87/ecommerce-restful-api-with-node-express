@@ -22,9 +22,9 @@ const router = express.Router();
 router.use("/:productId/reviews", reviewsRoute);
 router.get("/", index);
 router.get("/:id", validationparmsRules("id"), show);
-router.post("/", permissions('admin', 'maneger'), [uploadProductImages, resizeProductImages], ValidationbodyRulesForCreate, create);
+router.post("/", permissions('admin', 'manager'), [uploadProductImages, resizeProductImages], ValidationbodyRulesForCreate, create);
 router.put(
-    "/:id", permissions('admin', 'maneger'),
+    "/:id", permissions('admin', 'manager'),
     [uploadProductImages, resizeProductImages],
     validationparmsRules("id"),
 

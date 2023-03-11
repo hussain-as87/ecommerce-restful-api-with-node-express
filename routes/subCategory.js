@@ -18,9 +18,9 @@ const router = express.Router({mergeParams: true});
 
 router.get("/", createFilterObj, index);
 router.get("/:id", validationparmsRules("id"), show);
-router.post("/", permissions('admin', 'maneger'), [setCategoryId, ValidationbodyRulesForCreate], create);
+router.post("/", permissions('admin', 'manager'), [setCategoryId, ValidationbodyRulesForCreate], create);
 router.put(
-    "/:id", permissions('admin', 'maneger'),
+    "/:id", permissions('admin', 'manager'),
     validationparmsRules("id"),
 
     ValidationbodyRulesForUpdate,

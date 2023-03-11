@@ -13,12 +13,12 @@ const router = express.Router();
 router.get("/", index);
 router.get("/:id", validationparmsRules("id"), show);
 router.post(
-    "/", permissions('admin', 'maneger'),
+    "/", permissions('admin', 'manager'),
     ValidationbodyRulesForCreate,
     create
 );
 router.put(
-    "/:id", permissions('admin', 'maneger'),
+    "/:id", permissions('admin', 'manager'),
     validationparmsRules("id"),
     ValidationbodyRulesForUpdate,
     update
