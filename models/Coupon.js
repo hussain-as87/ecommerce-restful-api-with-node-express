@@ -14,7 +14,7 @@ const couponSchema = new mongoose.Schema(
             required: [true, "coupon discount required"],
         },
     },
-    {timeseries: true}
+    {timestamps: true}
 );
 
 export const Coupon = mongoose.model("Coupon", couponSchema);
