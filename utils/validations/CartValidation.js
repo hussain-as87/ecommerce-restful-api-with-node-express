@@ -9,8 +9,8 @@ export const ValidationbodyRulesForCreate = [
         .isMongoId()
         .withMessage("product id must be mongo id !")
         .custom(async (val) => {
-            const prodcut = await Product.findById(val);
-            if (!prodcut) {
+            const product = await Product.findById(val);
+            if (!product) {
                 throw new Error("product id is undefined");
             }
             return true;
