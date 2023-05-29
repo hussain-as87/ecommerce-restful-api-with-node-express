@@ -3,7 +3,7 @@ import aysncHandler from "express-async-handler";
 import ApiFeatures from "../utils/apiFeatures.js";
 
 export const indexFactory = (model, optionModelName) =>
-    aysncHandler(async (req, res) => {
+    aysncHandler(async (req, res,next) => {
         //filteration
         let filter = {};
         if (req.filterObj) {
@@ -19,6 +19,7 @@ export const indexFactory = (model, optionModelName) =>
             .limitFields();
         const {mongooseQuery, paginationResult} = api_features;
         const documents = await mongooseQuery;
+     
         res
             .status(200)
             .json({result: documents.length, paginationResult, data: documents});

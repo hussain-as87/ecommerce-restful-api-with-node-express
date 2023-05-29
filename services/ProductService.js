@@ -22,7 +22,7 @@ export const uploadProductImages = uploadmixOfImages([
 export const resizeProductImages = async (req, res, next) => {
     try {
       if (req.files.imageCover) {
-        const imageCoverFileName = `product-${uuidv4()}-${Date.now()}-cover.jpeg`;
+        const imageCoverFileName = `product-${uuidv4()}-${Date.now()}-cover.png`;
   
         await sharp(req.files.imageCover[0].buffer)
           .resize(2000, 1333)
@@ -38,7 +38,7 @@ export const resizeProductImages = async (req, res, next) => {
   
         await Promise.all(
           req.files.images.map(async (img, index) => {
-            const imageName = `product-${uuidv4()}-${Date.now()}-${index + 1}.jpeg`;
+            const imageName = `product-${uuidv4()}-${Date.now()}-${index + 1}.png`;
   
             await sharp(img.buffer)
               .toFormat("png")
