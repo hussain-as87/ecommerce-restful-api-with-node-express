@@ -26,7 +26,7 @@ export const createFilterObj = (req, res, next) => {
     let filterObject = {};
     if (req.params.categoryId) {
         filterObject = {category: req.params.categoryId};
-        req.filterObject = filterObject;
+        req.filterObj = filterObject;
     }
     next();
 };
