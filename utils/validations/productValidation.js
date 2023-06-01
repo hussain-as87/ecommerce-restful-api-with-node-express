@@ -49,8 +49,8 @@ export const ValidationbodyRulesForCreate = [
 
     check("colors")
         .optional()
-        .isArray()
-        .withMessage("availableColors should be array of string"),
+        /* .isArray()
+        .withMessage("availableColors should be array of string") */,
     check("imageCover").notEmpty().withMessage("Product imageCover is required"),
     check("images")
         .optional()
@@ -158,8 +158,8 @@ export const ValidationbodyRulesForUpdate = [
 
     check("colors")
         .optional()
-        .isArray()
-        .withMessage("availableColors should be array of string"),
+       /*  .isArray()
+        .withMessage("availableColors should be array of string") */,
     check("imageCover").optional(),
     check("images")
         .optional()
