@@ -1,2 +1,8 @@
 [build]
-  base = "./"
+  command = "npm run build"
+  base = "/"
+
+[[redirects]]
+  from = "/*"
+  to = "/server.js"
+  status = 200
