@@ -9,7 +9,8 @@
     "start:prod": "SET NODE_ENV=production & nodemon server.js",
     "seed": "cd .\\utils\\dummyData\\ & node seeder.js -i",
     "seed:rollback": "cd .\\utils\\dummyData\\ & node seeder.js -d",
-    "test": "jest"
+    "test": "jest",
+    "dev": "netlify dev"
   },
   "keywords": [],
   "author": "",
@@ -31,6 +32,7 @@
     "mongoose": "^6.5.3",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
+    "netlify-cli": "^15.3.1",
     "nodemailer": "^6.7.8",
     "nodemailer-smtp-transport": "^2.7.4",
     "nodemon": "^2.0.20",
