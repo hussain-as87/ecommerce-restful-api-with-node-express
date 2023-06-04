@@ -62,7 +62,7 @@ class ApiFeatures {
     paginate(countDocument) {
         //pagination
         let page = this.queryString.page * 1 || 1;
-        let limit = this.queryString.limit * 1 || 10;
+        let limit = this.queryString.limit * 1 || 100;
         let skip = (page - 1) * limit;
         let endIndex = page * limit;
 

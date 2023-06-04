@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: e-commerce-node
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: e-commerce-node
+  template:
+    metadata:
+      labels:
+        app: e-commerce-node
+    spec:
+      containers:
+        - name: e-commerce-node
+          image: hussain87/e-commerce:latest
+          ports:
+            - containerPort: 8000
