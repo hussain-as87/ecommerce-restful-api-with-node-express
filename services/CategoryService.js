@@ -23,9 +23,9 @@ export const resizeImage = asyncHandler(async (req, res, next) => {
     const filename = `category-${uuidv4()}-${Date.now()}.jpeg`;
     if (req.file) {
         await sharp(req.file.buffer)
-            .resize(600, 600)
+           /*  .resize(600, 600)
             .toFormat("jpeg")
-            .jpeg({quality: 90})
+            .jpeg({quality: 90}) */
             .toFile(`public/uploads/categories/${filename}`);
         //save image in Database
         req.body.image = filename;
