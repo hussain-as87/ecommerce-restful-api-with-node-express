@@ -45,7 +45,7 @@ if (process.env.NODE_ENV === "development") {
 }
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 500,
+    max: 50000,
     message: 'Too many accounts created from this IP, please try again after an hour',
     standardHeaders: true,
     legacyHeaders: false,

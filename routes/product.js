@@ -23,15 +23,7 @@ router.use("/:productId/reviews", reviewsRoute);
 router.get("/", index);
 router.get("/:id", validationparmsRules("id"), show);
 router.post("/", permissions('admin', 'manager'),  [uploadProductImages, resizeProductImages ], ValidationbodyRulesForCreate, create);
-router.put(
-    "/:id", permissions('admin', 'manager'),
-    [uploadProductImages, resizeProductImages],
-    validationparmsRules("id"),
-
-    ValidationbodyRulesForUpdate,
-
-    update
-);
+router.put("/:id", permissions('admin', 'manager'),[uploadProductImages, resizeProductImages], validationparmsRules("id"), ValidationbodyRulesForUpdate,update);
 router.delete("/:id", permissions('admin'), validationparmsRules("id"), destroy);
 
 export default router;
