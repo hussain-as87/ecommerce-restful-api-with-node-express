@@ -82,3 +82,33 @@ export const resetPasswordValidator = [
 
   validatorMiddleware,
 ];
+export const forgotPasswordValidation = [
+  check("email")
+    .notEmpty()
+    .withMessage("Email required")
+    .isEmail()
+    .withMessage("Invalid email address")
+    .custom((val) =>
+      User.findOne({ email: val }).then((user) => {
+        if (!user) {
+          return Promise.reject(new Error("E-mail doesn't exist!"));
+        }
+      })
+    ),
+  validatorMiddleware,
+];
+export const verifyPasswordResetCodeValidation = [
+  check("resetCode")
+    .notEmpty()
+    .withMessage("Reset code required!")
+    .isLength({ min: 6, max: 6 })
+    .withMessage("Reset code must be 6 characters")
+    .custom((val) =>
+      User.findOne({ passwordResetCode: val }).then((user) => {
+        if (!user) {
+          return Promise.reject(new Error("Reset code incorrect try again!"));
+        }
+      })
+    ),
+  validatorMiddleware,
+];
