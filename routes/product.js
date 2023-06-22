@@ -12,7 +12,7 @@ import {
 
 import {ValidationbodyRulesForCreate, ValidationbodyRulesForUpdate} from "../utils/validations/ProductValidation.js"
 
-import {permissions} from "../services/AuthService.js";
+import {permissions, protect} from "../services/AuthService.js";
 import reviewsRoute from "./review.js"
 
 const router = express.Router();
@@ -22,8 +22,8 @@ const router = express.Router();
 router.use("/:productId/reviews", reviewsRoute);
 router.get("/", index);
 router.get("/:id", validationparmsRules("id"), show);
-router.post("/", permissions('admin', 'manager'),  [uploadProductImages, resizeProductImages ], ValidationbodyRulesForCreate, create);
-router.put("/:id", permissions('admin', 'manager'),[uploadProductImages, resizeProductImages], validationparmsRules("id"), ValidationbodyRulesForUpdate,update);
-router.delete("/:id", permissions('admin'), validationparmsRules("id"), destroy);
+router.post("/",protect, permissions('admin', 'manager'),  [uploadProductImages, resizeProductImages ], ValidationbodyRulesForCreate, create);
+router.put("/:id",protect, permissions('admin', 'manager'),[uploadProductImages, resizeProductImages], validationparmsRules("id"), ValidationbodyRulesForUpdate,update);
+router.delete("/:id",protect, permissions('admin'), validationparmsRules("id"), destroy);
 
 export default router;

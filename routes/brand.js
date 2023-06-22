@@ -15,22 +15,22 @@ import {
 } from "../utils/validations/BrandValidation.js";
 
 const router = express.Router();
-import {permissions} from "../services/AuthService.js"
+import {permissions, protect} from "../services/AuthService.js"
 
 router.get("/", index);
-router.get("/:id", validationparmsRules("id"), show);
+router.get("/:id",protect, validationparmsRules("id"), show);
 router.post(
-    "/", permissions('admin', 'manager'),
+    "/",protect, permissions('admin', 'manager'),
     [uploadImage, resizeImage],
     ValidationbodyRulesForCreate,
     create
 );
 router.put(
-    "/:id", permissions('admin', 'manager'),
+    "/:id",protect, permissions('admin', 'manager'),
     [validationparmsRules("id"), uploadImage, resizeImage],
     ValidationbodyRulesForUpdate,
     update
 );
-router.delete("/:id", permissions('admin'), validationparmsRules("id"), destroy);
+router.delete("/:id",protect, permissions('admin'), validationparmsRules("id"), destroy);
 
 export default router;

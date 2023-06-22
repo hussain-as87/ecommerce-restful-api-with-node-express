@@ -12,22 +12,22 @@ import {
 
 import {ValidationbodyRulesForCreate, ValidationbodyRulesForUpdate} from "../utils/validations/SubCategoryValidation.js"
 
-import {permissions} from "../services/AuthService.js"
+import {permissions, protect} from "../services/AuthService.js"
 // to allow us to access parameters on other routes
 const router = express.Router({mergeParams: true});
 
 router.get("/", createFilterObj, index);
-router.get("/:id", validationparmsRules("id"), show);
-router.post("/", permissions('admin', 'manager'), [setCategoryId, ValidationbodyRulesForCreate], create);
+router.get("/:id",protect, validationparmsRules("id"), show);
+router.post("/",protect, permissions('admin', 'manager'), [setCategoryId, ValidationbodyRulesForCreate], create);
 router.put(
-    "/:id", permissions('admin', 'manager'),
+    "/:id",protect, permissions('admin', 'manager'),
     validationparmsRules("id"),
 
     ValidationbodyRulesForUpdate,
 
     update
 );
-router.delete("/:id", permissions('admin'), validationparmsRules("id"), destroy);
+router.delete("/:id",protect, permissions('admin'), validationparmsRules("id"), destroy);
 /* apple */
 
 export default router;

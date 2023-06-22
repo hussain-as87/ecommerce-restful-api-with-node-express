@@ -19,12 +19,12 @@ import {webhookCheckout} from "../services/OrderService.js";
  */
 export const router = express.Router();
 
-router.use("/categories", protect, categoryRouter);
-router.use("/subcategories", protect, subCategoryRouter);
-router.use("/brands", protect, BrandRouter);
+router.use("/categories", categoryRouter);
+router.use("/subcategories", subCategoryRouter);
+router.use("/brands", BrandRouter);
 router.use("/users", protect, UserRouter);
-router.use("/products", protect, ProductRouter);
-router.use("/reviews", ReviewRouter);
+router.use("/products", ProductRouter);
+router.use("/reviews", protect,ReviewRouter);
 router.use("/wishlist", protect, WishListRouter);
 router.use("/address", protect, AddressRouter);
 router.use("/coupons", protect, CouponRouter);

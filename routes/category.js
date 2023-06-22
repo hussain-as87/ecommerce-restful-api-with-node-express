@@ -13,7 +13,7 @@ import {
     ValidationbodyRulesForCreate,
     ValidationbodyRulesForUpdate,
 } from "../utils/validations/CategoryValidation.js";
-import {permissions} from "../services/AuthService.js"
+import {permissions, protect} from "../services/AuthService.js"
 import subcategoriesRoute from "./subCategory.js";
 
 const router = express.Router();
@@ -21,9 +21,9 @@ const router = express.Router();
 //nested route
 router.use("/:categoryId/subcategories", subcategoriesRoute);
 router.get("/", index);
-router.get("/:id", validationparmsRules("id"), show);
-router.post("/", permissions('admin', 'manager'), [uploadImage, resizeImage],ValidationbodyRulesForCreate, create);
-router.put("/:id", permissions('admin', 'manager'), [validationparmsRules("id"), uploadImage, resizeImage], ValidationbodyRulesForUpdate, update);
-router.delete("/:id", permissions('admin'), validationparmsRules("id"), destroy);
+router.get("/:id",protect, validationparmsRules("id"), show);
+router.post("/", protect,permissions('admin', 'manager'), [uploadImage, resizeImage],ValidationbodyRulesForCreate, create);
+router.put("/:id",protect, permissions('admin', 'manager'), [validationparmsRules("id"), uploadImage, resizeImage], ValidationbodyRulesForUpdate, update);
+router.delete("/:id",protect, permissions('admin'), validationparmsRules("id"), destroy);
 
 export default router;
