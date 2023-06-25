@@ -29,7 +29,6 @@ export const create = asyncHandler(async (req, res, next) => {
         {$addToSet: {wishlist: req.body.productId}},
         {new: true}
     );
-    console.log(user.wishlist);
     res.status(200).json({
         status: "success",
         message: "product added successfully to you'r wishlist.",
