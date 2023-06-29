@@ -24,7 +24,7 @@ router.use("/subcategories", subCategoryRouter);
 router.use("/brands", BrandRouter);
 router.use("/users", protect, UserRouter);
 router.use("/products", ProductRouter);
-router.use("/reviews", protect,ReviewRouter);
+router.use("/reviews",ReviewRouter);
 router.use("/wishlist", protect, WishListRouter);
 router.use("/address", protect, AddressRouter);
 router.use("/coupons", protect, CouponRouter);
