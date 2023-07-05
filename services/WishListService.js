@@ -51,7 +51,7 @@ export const destroy = asyncHandler(async (req, res, next) => {
         {new: true}
     );
 
-    return res.status(200).json({
+    return res.status(204).json({
         status: "success",
         message: "Product removed successfully from your wishlist.",
         data: user.wishlist,

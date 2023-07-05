@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get("/", index);
 
-router.post("/", [permissions("user"), createwishlistValidation], create);
+router.post("/", [permissions("user","admin","manager"), createwishlistValidation], create);
 router.delete(
     "/:productId",
     [validationparmsRules("productId"), permissions("user")],

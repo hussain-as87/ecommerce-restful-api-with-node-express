@@ -13,7 +13,7 @@ export const index = asyncHandler(async (req, res, next) => {
     const cart = await Cart.findOne({user: req.user._id});
     if (!cart) {
         return next(
-            new ApiError(`there is not cart fro this user id : ${req.user._id}`, 404)
+            new ApiError(`there is not cart for this user id : ${req.user._id}`, 404)
         );
     }
     res.status(200).json({
