@@ -74,7 +74,7 @@ export const create = asyncHandler(async ( req, res, next) => {
  * @route PUT api/vi/orders/:id/pay
  * @access protected(Admin-Manager)
  */
-export const updateOrderPaidStatus = asyncHandler(async ( req, res, next) => {
+export const updateOrderPaidStatus = asyncHandler(async (req, res, next) => {
     const {id} = req.params;
     const order = await Order.findById(id);
     if (!order) {
@@ -91,7 +91,7 @@ export const updateOrderPaidStatus = asyncHandler(async ( req, res, next) => {
  * @access protected(Admin-Manager)
  */
 export const updateOrderDeliveredStatus = asyncHandler(
-    async (err, req, res, next) => {
+    async (req, res, next) => {
         const {id} = req.params;
         const order = await Order.findById(id);
         if (!order) {

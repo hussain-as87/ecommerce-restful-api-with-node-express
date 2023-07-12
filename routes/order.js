@@ -34,7 +34,7 @@ router.put(
     updateOrderPaidStatus
 );
 router.put(
-    "/:id/deliver",
+    "/:id/delivered",
     permissions("admin", "manager"),
     validationparmsRules("id"),
     updateOrderDeliveredStatus
