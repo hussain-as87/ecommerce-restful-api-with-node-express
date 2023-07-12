@@ -250,3 +250,12 @@ export const webhookCheckout = asyncHandler(async ( req, res, next) => {
     // Return a res to acknowledge receipt of the event
     res.json({received: true});
 });
+
+
+
+/**
+ * @description Delete specific order by id
+ * @route PUT api/vi/orders/:id
+ * @access private
+ */
+export const destroy = destroyFactory(Order);

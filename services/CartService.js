@@ -156,13 +156,16 @@ export const updateQuantity = asyncHandler(async (req, res, next) => {
  * @access private (user)
  */
 export const applyCoupon = asyncHandler(async (req, res, next) => {
+    if (req.body.coupon ==="") {
+        return next(new ApiError(`Missing the coupon code!`));
+    }
     //1) get coupon based on coupon name
     const coupon = await Coupon.findOne({
         name: req.body.coupon,
         expire: {$gt: Date.now()},
     });
     if (!coupon) {
-        return next(new ApiError(`there is not coupon with ${req.body.coupon}`));
+        return next(new ApiError(`The coupon not found!`));
     }
     //2) get logged user cart to get total cart price
     const cart = await Cart.findOne({user: req.user._id});

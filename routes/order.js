@@ -7,6 +7,7 @@ import {
     show,
     updateOrderDeliveredStatus,
     updateOrderPaidStatus,
+    destroy,
 } from "../services/OrderService.js";
 import {permissions} from "../services/AuthService.js";
 import {validationparmsRules} from "../middlewares/ValidatorMiddleware.js";
@@ -38,5 +39,5 @@ router.put(
     validationparmsRules("id"),
     updateOrderDeliveredStatus
 );
- //router.delete("/:id", permissions('admin'),validationparmsRules("id"), destroy);
+ router.delete("/:id", permissions('admin'),validationparmsRules("id"), destroy);
 export default router;
