@@ -80,7 +80,7 @@ export const updateOrderPaidStatus = asyncHandler(async (req, res, next) => {
     if (!order) {
         return next(new ApiError(`there is no order with such id ${id}`, 404));
     }
-    order.isPaid = true;
+    order.isPaid = !order.isPaid;
     order.paidAt = Date.now();
     const updatedOrder = await order.save();
     res.status(200).json({status: "success", data: updatedOrder});
@@ -97,7 +97,7 @@ export const updateOrderDeliveredStatus = asyncHandler(
         if (!order) {
             return next(new ApiError(`there is no order with such id ${id}`, 404));
         }
-        order.isDelivered = true;
+        order.isDelivered = !order.isDelivered;
         order.deliveredAt = Date.now();
         const updatedOrder = await order.save();
         res.status(200).json({status: "success", data: updatedOrder});
