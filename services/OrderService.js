@@ -6,6 +6,7 @@ import {Order} from "../models/Order.js";
 import {Cart} from "../models/Cart.js";
 import {Product} from "../models/Product.js";
 import {User} from "../models/User.js";
+import {destroyFactory} from "./handlersFactory.js";
 
 export const filterOrderForLoggedUser = asyncHandler(async (req, res, next) => {
     if (req.user.role === "user") req.filterObj = {user: req.user._id};
