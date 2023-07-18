@@ -103,17 +103,6 @@ export const verifyPasswordResetCodeValidation = [
     .notEmpty()
     .withMessage("Reset code required!")
     .isLength({ min: 6, max: 6 })
-    .withMessage("Reset code must be 6 characters")
-    .custom((val) => {
-      const hashedResetCode = crypto
-        .createHash("sha256")
-        .update(val)
-        .digest("hex");
-      User.findOne({ passwordResetCode: hashedResetCode }).then((user) => {
-        if (!user) {
-          return Promise.reject(new Error("Reset code incorrect try again!"));
-        }
-      });
-    }),
+    .withMessage("Reset code must be 6 characters"),
   validatorMiddleware,
 ];
