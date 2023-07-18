@@ -3,6 +3,7 @@ import slugify from "slugify";
 import { validatorMiddleware } from "../../middlewares/ValidatorMiddleware.js";
 import { User } from "../../models/User.js";
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
 
 export const signupValidator = [
   check("name")
@@ -103,12 +104,16 @@ export const verifyPasswordResetCodeValidation = [
     .withMessage("Reset code required!")
     .isLength({ min: 6, max: 6 })
     .withMessage("Reset code must be 6 characters")
-    .custom((val) =>
-      User.findOne({ passwordResetCode: val }).then((user) => {
+    .custom((val) => {
+      const hashedResetCode = crypto
+        .createHash("sha256")
+        .update(val)
+        .digest("hex");
+      User.findOne({ passwordResetCode: hashedResetCode }).then((user) => {
         if (!user) {
           return Promise.reject(new Error("Reset code incorrect try again!"));
         }
-      })
-    ),
+      });
+    }),
   validatorMiddleware,
 ];
