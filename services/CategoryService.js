@@ -20,11 +20,10 @@ export const uploadImage = uploadSingleImage("image");
  * @description upload image
  */
 export const resizeImage = asyncHandler(async (req, res, next) => {
-    const filename = `category-${uuidv4()}-${Date.now()}.jpeg`;
+    const filename = `category-${uuidv4()}-${Date.now()}.png`;
     if (req.file) {
-        await sharp(req.file.buffer)
+        await sharp(req.file.buffer).toFormat("png")
            /*  .resize(600, 600)
-            .toFormat("jpeg")
             .jpeg({quality: 90}) */
             .toFile(`public/uploads/categories/${filename}`);
         //save image in Database
