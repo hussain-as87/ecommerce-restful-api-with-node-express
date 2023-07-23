@@ -16,9 +16,9 @@ const brandSchema = new mongoose.Schema(
 );
 const setImageUrl = (doc) => {
     // return base url + image name
-    if (doc.image) {
+    if (doc.image && !doc.image.includes(process.env.BASE_URL)) {
         doc.image = `${process.env.BASE_URL}/uploads/brands/${doc.image}`;
-    }
+      }
 };
 //when get all,get one,update
 brandSchema.post("init", (doc) => {

@@ -22,7 +22,7 @@ const SubCategorySchema = new mongoose.Schema(
 SubCategorySchema.pre(/^find/, function (next) {
     this.populate({
         path: "category",
-        select: "name -_id",
+        select: "name _id",
     });
     next();
 });
