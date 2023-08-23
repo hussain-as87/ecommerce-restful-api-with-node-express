@@ -9,8 +9,8 @@ const reviewSchema = new mongoose.Schema(
         },
         ratings: {
             type: Number,
-            min: [1, 'Min ratings value is 1.0'],
-            max: [5, 'Max ratings value is 5.0'],
+            min: [1, 'Min value is 1.0'],
+            max: [5, 'Max value is 5.0'],
             required: [true, 'review ratings required'],
         },
         user: {
@@ -37,7 +37,7 @@ reviewSchema.statics.calcAverageRatingsAndQuantity = async function (
     productId
 ) {
     const result = await this.aggregate([
-        // Stage 1 : get all reviews in specific product
+        // Stage 1: get all reviews in specific product
         {
             $match: {product: productId},
         },
@@ -46,7 +46,7 @@ reviewSchema.statics.calcAverageRatingsAndQuantity = async function (
             $group: {
                 _id: 'product',
                 avgRatings: {$avg: '$ratings'},
-                ratingsQuantity: {$sum: 0},
+                ratingsQuantity: {$sum: 1},
             },
         },
     ]);
