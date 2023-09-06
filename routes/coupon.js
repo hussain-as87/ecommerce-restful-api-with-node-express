@@ -3,7 +3,7 @@ import {validationparmsRules} from "../middlewares/ValidatorMiddleware.js";
 import {
     ValidationbodyRulesForCreate,
     ValidationbodyRulesForUpdate,
-} from "../utils/validations/CouponValidation.js";
+} from "../middlewares/validations/CouponValidation.js";
 import {permissions} from "../services/AuthService.js"
 import {create, destroy, index, show, update} from "../services/CouponService.js";
 

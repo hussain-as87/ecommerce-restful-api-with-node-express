@@ -12,7 +12,7 @@ import {
 import {
     ValidationbodyRulesForCreate,
     ValidationbodyRulesForUpdate,
-} from "../utils/validations/BannerValidation.js";
+} from "../middlewares/validations/BannerValidation.js";
 
 const router = express.Router();
 import {permissions, protect} from "../services/AuthService.js"

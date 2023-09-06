@@ -12,7 +12,7 @@ import {
   resetPasswordValidator,
   forgotPasswordValidation,
   verifyPasswordResetCodeValidation,
-} from "../utils/validations/AuthValidation.js";
+} from "../middlewares/validations/AuthValidation.js";
 
 const router = express.Router();
 

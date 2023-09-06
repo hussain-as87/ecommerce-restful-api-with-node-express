@@ -10,7 +10,7 @@ import {
     uploadProductImages
 } from "../services/ProductService.js";
 
-import {ValidationbodyRulesForCreate, ValidationbodyRulesForUpdate} from "../utils/validations/ProductValidation.js"
+import {ValidationbodyRulesForCreate, ValidationbodyRulesForUpdate} from "../middlewares/validations/ProductValidation.js"
 
 import {permissions, protect} from "../services/AuthService.js";
 import reviewsRoute from "./review.js"
