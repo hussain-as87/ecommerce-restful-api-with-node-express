@@ -12,7 +12,7 @@ import {
 import {
     ValidationbodyRulesForCreate,
     ValidationbodyRulesForUpdate,
-} from "../middlewares/validations/CategoryValidation.js";
+} from "./validations/CategoryValidation.js";
 import {permissions, protect} from "../services/AuthService.js"
 import subcategoriesRoute from "./subCategory.js";
 

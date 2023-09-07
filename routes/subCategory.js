@@ -10,7 +10,7 @@ import {
     update
 } from "../services/SubCategoryService.js";
 
-import {ValidationbodyRulesForCreate, ValidationbodyRulesForUpdate} from "../middlewares/validations/SubCategoryValidation.js"
+import {ValidationbodyRulesForCreate, ValidationbodyRulesForUpdate} from "./validations/SubCategoryValidation.js"
 
 import {permissions, protect} from "../services/AuthService.js"
 // to allow us to access parameters on other routes

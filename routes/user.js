@@ -19,7 +19,7 @@ import {
     ValidationbodyRulesForCreate,
     ValidationbodyRulesForUpdate,
     changePasswordValidator,
-} from "../middlewares/validations/UserValidation.js";
+} from "./validations/UserValidation.js";
 import {permissions} from "../services/AuthService.js";
 
 const router = express.Router();

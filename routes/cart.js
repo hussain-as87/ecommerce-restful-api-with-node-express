@@ -1,6 +1,6 @@
 import express from "express";
 import {validationparmsRules} from "../middlewares/ValidatorMiddleware.js";
-import {ValidationbodyRulesForCreate} from "../middlewares/validations/CartValidation.js";
+import {ValidationbodyRulesForCreate} from "./validations/CartValidation.js";
 import {permissions} from "../services/AuthService.js";
 import {
     applyCoupon,

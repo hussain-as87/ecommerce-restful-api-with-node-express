@@ -3,7 +3,7 @@ import {validationparmsRules} from "../middlewares/ValidatorMiddleware.js";
 import {permissions} from "../services/AuthService.js";
 import {create, destroy, index} from "../services/WishListService.js";
 
-import {createwishlistValidation} from "../middlewares/validations/WishlistValidation.js";
+import {createwishlistValidation} from "./validations/WishlistValidation.js";
 
 
 const router = express.Router();

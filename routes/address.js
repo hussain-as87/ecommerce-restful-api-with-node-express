@@ -5,7 +5,7 @@ const router = express.Router();
 import {permissions} from "../services/AuthService.js";
 import {create, destroy, index} from "../services/AddressService.js";
 
-import {createaddressValidation} from "../middlewares/validations/AddressValidation.js";
+import {createaddressValidation} from "./validations/AddressValidation.js";
 
 
 router.get("/", index);

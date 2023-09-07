@@ -6,7 +6,7 @@ import {
   ValidationbodyRulesForCreate,
   ValidationbodyRulesForDelete,
   ValidationbodyRulesForUpdate,
-} from "../middlewares/validations/ReviewValidation.js";
+} from "./validations/ReviewValidation.js";
 import { permissions, protect } from "../services/AuthService.js";
 import {
   create,
